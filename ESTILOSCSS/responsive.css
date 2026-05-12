@@ -1,0 +1,39 @@
+@media (max-width: 768px) {
+    .barra-superior {
+        flex-direction: column;
+        height: auto;
+        padding: var(--spacing-4);
+        gap: var(--spacing-4);
+        align-items: center;
+    }
+
+    .container-logo {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .subtitulo-app { display: none; }
+
+    .acciones-header {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: var(--spacing-3);
+    }
+
+    .perfil-btn, .exit {
+        flex: 1;
+        max-width: 150px;
+    }
+
+    .tabs-nav {
+        padding: 0;
+        gap: 0;
+    }
+
+    .tab-btn {
+        flex: 1;
+        text-align: center;
+    }
+}
+

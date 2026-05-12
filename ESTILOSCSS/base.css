@@ -61,3 +61,14 @@
     --transition-base: 200ms ease-in-out;
     --transition-slow: 300ms ease-in-out;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: sans-serif;
+    background-color: var(--background);
+}

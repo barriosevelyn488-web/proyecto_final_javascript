@@ -1,0 +1,54 @@
+/* Header Principal */
+.barra-superior {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--spacing-8);
+    height: 75px;
+    box-shadow: var(--shadow-md);
+}
+
+.container-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    text-decoration: none;
+    color: inherit;
+}
+
+#carrito { 
+    height: 45px; 
+    width: auto; 
+    border-radius: var(--radius-sm);
+}
+
+.textos-logo { display: flex; flex-direction: column; }
+
+.nombre-app { 
+    font-size: var(--font-size-xl); 
+    font-weight: var(--font-weight-bold); 
+}
+
+.subtitulo-app { 
+    font-size: var(--font-size-xs); 
+    color: var(--muted-foreground); 
+}
+
+/* Contenedor de las pestañas */
+.tabs-nav {
+    display: flex;
+    background-color: var(--secondary);
+    padding: var(--spacing-2) var(--spacing-8) 0;
+    border-bottom: 1px solid var(--border);
+    gap: var(--spacing-6);
+}
+
+/* Espacio dinámico para el contenido (H1, Grids, etc) */
+#app-content { 
+    padding: var(--spacing-8); 
+    min-height: 400px;
+}
+
+

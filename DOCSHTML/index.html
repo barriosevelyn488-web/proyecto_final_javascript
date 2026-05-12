@@ -1,17 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pagina principal</title>
+    <title>Campus Parking</title>
     <link rel="stylesheet" href="/ESTILOSCSS/main.css">
 </head>
 <body>
-    <header class="logo">
-        Campus-Parking
-        <a href=""></a>
+
+    <header class="barra-superior">
+        <a href="#" class="container-logo">
+            <img src="/IMG/1.carrito.jpg" alt="Logo" id="carrito">
+            <div class="textos-logo">
+                <span class="nombre-app">Campus Parking</span>
+                <span class="subtitulo-app">Sistema de gestión de parqueo</span>
+            </div>
+        </a>
+
+        <div class="acciones-header">
+            <button class="perfil-btn">Perfil</button>
+            <button class="exit">Salir</button>
+        </div>
     </header>
 
-    <script src="/FUNCIONESJS/main.js" type="module"></script>
+    <nav class="tabs-nav">
+        <button id="tab-servicios" class="tab-btn">Servicios</button>
+        <button id="tab-tipos" class="tab-btn">Tipos</button>
+    </nav>
+    
+    <main id="app-content">
+        </main>
+
+    <script src="./FUNCIONESJS/main.js" type="module"></script>
 </body>
 </html>

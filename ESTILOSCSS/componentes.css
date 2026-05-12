@@ -1,0 +1,46 @@
+/* Botones de Perfil y Salir */
+.perfil-btn, .exit {
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.perfil-btn {
+    background: transparent;
+    color: var(--primary-foreground);
+    border: 1px solid var(--border);
+}
+
+.exit {
+    background-color: var(--destructive);
+    color: var(--destructive-foreground);
+    border: none;
+}
+
+.exit:hover { opacity: 0.9; transform: scale(1.05); }
+
+/* SISTEMA DE PESTAÑAS (TABS) */
+/* Botones de Pestañas */
+.tab-btn {
+    padding: var(--spacing-3) var(--spacing-6);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    font-weight: var(--font-weight-semibold);
+    border-bottom: 3px solid transparent; /* Reservamos el espacio */
+    transition: all var(--transition-fast);
+}
+
+/* El hover que ya te funciona */
+.tab-btn:hover {
+    color: var(--primary);
+}
+
+/* LA CLAVE: El estado activo que JS activará */
+.tab-btn.active {
+    color: var(--primary) !important;
+    border-bottom: 3px solid var(--info) !important; /* Tu azul del root */
+}
