@@ -1,33 +1,49 @@
-//este es el director de la orquesta
-
 document.addEventListener('DOMContentLoaded', () => {
-    const tabServicios = document.getElementById('tab-servicios');
-    const tabTipos = document.getElementById('tab-tipos');
     const appContent = document.getElementById('app-content');
+    const menuNavegacion = document.querySelector('.tabs-nav'); // El padre de los botones
 
-    // Función maestra para cambiar de "página"
-    const cambiarVista = (botonActivo, tituloH1) => {
-        // 1. Quitamos la clase 'active' de todos los botones
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
+    // 1. FUNCIÓN MAESTRA PARA CARGAR PÁGINAS EXTERNAS
+    const cargarPagina = async (seccion, botonActivo) => {
+        try {
+            // Limpieza de estados visuales
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            botonActivo.classList.add('active');
 
-        // 2. Se la ponemos al que clickeamos (esto activa la barra azul)
-        botonActivo.classList.add('active');
+            // Seguridad: Validamos que la sección sea una de las permitidas para evitar cargas maliciosas
+            const seccionesValidas = ['servicios', 'tipos'];
+            if (!seccionesValidas.includes(seccion)) return;
 
-        // 3. Cambiamos el contenido del contenedor principal
-        appContent.innerHTML = `<h1>${tituloH1}</h1>`;
+            // Fetch de la página desde la carpeta PAGINAS
+            const respuesta = await fetch(`/PAGINAS/${seccion}.html`);
+            
+            if (!respuesta.ok) throw new Error("No se pudo encontrar la página");
+
+            const html = await respuesta.text();
+            
+            // Insertar el contenido de forma segura
+            appContent.innerHTML = html;
+
+        } catch (error) {
+            console.error("Error en la carga:", error);
+            appContent.innerHTML = `<p>Error al cargar el contenido. Intenta de nuevo.</p>`;
+        }
     };
 
-    // Listeners de los clics
-    tabServicios.addEventListener('click', () => {
-        cambiarVista(tabServicios, "Interfaz de Servicios");
+    // 2. DELEGACIÓN DE EVENTOS (Un solo listener para todos los botones)
+    menuNavegacion.addEventListener('click', (e) => {
+        // Verificamos que lo que se clickeó sea un botón de pestaña
+        const boton = e.target.closest('.tab-btn');
+        
+        if (boton) {
+            const seccion = boton.getAttribute('data-seccion'); // Usamos el atributo data
+            cargarPagina(seccion, boton);
+        }
     });
 
-    tabTipos.addEventListener('click', () => {
-        cambiarVista(tabTipos, "Interfaz de Tipos");
-    });
-
-    // Carga inicial: Simula un clic en Servicios al abrir
-    tabServicios.click();
+    // 3. CARGA INICIAL
+    // Buscamos el botón que tenga la clase 'active' por defecto en el HTML
+    const botonInicial = document.querySelector('.tab-btn.active');
+    if (botonInicial) {
+        cargarPagina(botonInicial.getAttribute('data-seccion'), botonInicial);
+    }
 });

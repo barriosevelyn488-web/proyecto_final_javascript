@@ -21,7 +21,7 @@
         gap: var(--spacing-3);
     }
 
-    .perfil-btn, .exit {
+    .perfil-btn, .exit-btn {
         flex: 1;
         max-width: 150px;
     }
@@ -34,6 +34,11 @@
     .tab-btn {
         flex: 1;
         text-align: center;
+    }
+
+    .subtitulo-app { 
+        font-size: var(--font-size-md); 
+        color: var(--muted-foreground); 
     }
 }
 

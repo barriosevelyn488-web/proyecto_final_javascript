@@ -1,5 +1,5 @@
 /* Botones de Perfil y Salir */
-.perfil-btn, .exit {
+.perfil-btn, .exit-btn {
     padding: var(--spacing-2) var(--spacing-4);
     border-radius: var(--radius-md);
     font-weight: var(--font-weight-medium);
@@ -13,16 +13,21 @@
     border: 1px solid var(--border);
 }
 
-.exit {
+.exit-btn {
     background-color: var(--destructive);
     color: var(--destructive-foreground);
     border: none;
 }
 
-.exit:hover { opacity: 0.9; transform: scale(1.05); }
+.exit-btn:hover { opacity: 0.9; transform: scale(1.05); }
 
-/* SISTEMA DE PESTAÑAS (TABS) */
-/* Botones de Pestañas */
+.perfil-btn:hover{
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+/* --- ESTILOS DE PESTAÑAS (TABS JAVASCRIPT) --- */
+
 .tab-btn {
     padding: var(--spacing-3) var(--spacing-6);
     border: none;
@@ -30,17 +35,118 @@
     cursor: pointer;
     color: var(--muted-foreground);
     font-weight: var(--font-weight-semibold);
-    border-bottom: 3px solid transparent; /* Reservamos el espacio */
+    /* Reservamos el espacio del borde para que el botón no "salte" al activarse */
+    border-bottom: 3px solid transparent; 
     transition: all var(--transition-fast);
 }
 
-/* El hover que ya te funciona */
+/* El hover se aplica cuando pasa el mouse */
 .tab-btn:hover {
     color: var(--primary);
 }
 
-/* LA CLAVE: El estado activo que JS activará */
+/* ESTADO ACTIVO*/
+/* Al usar .tab-btn.active (clase + clase), la especificidad sube 
+   naturalmente y ganará sobre .tab-btn por sí sola */
 .tab-btn.active {
-    color: var(--primary) !important;
-    border-bottom: 3px solid var(--info) !important; /* Tu azul del root */
+    color: var(--primary);
+    border-bottom: 3px solid var(--info); /* Tu azul del root */
+}
+
+/* --- CONTENEDORES DE VISTA --- */
+.contenedor-vista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+.encabezado-seccion {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.encabezado-seccion h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--primary);
+}
+
+.stats {
+    font-size: var(--font-size-sm);
+    color: var(--muted-foreground);
+    margin-top: 4px;
+}
+
+/* --- BOTÓN NUEVO INGRESO/TIPO --- */
+.btn-principal {
+    background-color: var(--primary); /* El negro profundo de el root */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition-fast);
+}
+
+.btn-principal:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* --- FILTROS INTERNOS (SUB-NAV) --- */
+.filtros-internos {
+    display: flex;
+    gap: var(--spacing-4);
+    border-bottom: 1px solid var(--border);
+}
+
+.filter-btn {
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    font-weight: var(--font-weight-semibold);
+    border-bottom: 2px solid transparent;
+}
+
+.filter-btn.active {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+}
+
+/* --- ESTADO VACÍO (CARDS) --- */
+.pantalla-vacia {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-16);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    min-height: 300px;
+}
+
+.ilustracion img {
+    width: 80px;
+    opacity: 0.3;
+    margin-bottom: var(--spacing-4);
+    filter: grayscale(1);
+}
+
+.pantalla-vacia p {
+    font-weight: var(--font-weight-medium);
+    color: var(--muted-foreground);
+}
+
+.sub-texto {
+    font-size: var(--font-size-xs);
+    color: var(--muted-foreground);
+    margin-top: 8px;
 }
