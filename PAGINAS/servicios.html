@@ -1,28 +1,39 @@
-<!-- Vista de Servicios de Parqueadero -->
-<section class="contenedor-vista fade-in">
-    <header class="encabezado-seccion">
-        <div class="titulos">
-            <h2>Servicios de Parqueadero</h2>
-            <p class="stats">Slots activos: 0/100 • Disponibles: 100</p>
-        </div>
-        <button class="btn-principal">
-            <span>+</span> Nuevo Ingreso
-        </button>
-    </header>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Servicios</title>
+    <!-- Salimos de PAGINAS y entramos a ESTILOSCSS -->
+    <link rel="stylesheet" href="/ESTILOSCSS/main.css">
+</head>
+<body>
+    <div class="container" id="container">
+        <header class="header">
+            <nav>
+                <button class="btn" data-number="1">Web Design</button>
+                <button class="btn" data-number="2">App Dev</button>
+                <button class="btn" data-number="3">Consultoría</button>
+            </nav>
+        </header>
 
-    <!-- Sub-navegación interna (Filtros) -->
-    <nav class="filtros-internos">
-        <button class="filter-btn active">Todos (0)</button>
-        <button class="filter-btn">Activos (0)</button>
-        <button class="filter-btn">Finalizados (0)</button>
-    </nav>
+        <main class="content">
+            <section class="content_text block" data-seccion="1">
+                <h2>Diseño Web</h2>
+                <p>Creamos interfaces modernas y funcionales.</p>
+            </section>
+            <section class="content_text" data-seccion="2">
+                <h2>Desarrollo de Apps</h2>
+                <p>Soluciones móviles para iOS y Android.</p>
+            </section>
+            <section class="content_text" data-seccion="3">
+                <h2>Consultoría IT</h2>
+                <p>Asesoría experta para tus proyectos digitales.</p>
+            </section>
+        </main>
+    </div>
 
-    <!-- Área de contenido de servicios -->
-    <article class="pantalla-vacia">
-        <div class="ilustracion">
-            <!-- Icono de carrito basado en tu diseño -->
-            <img src="/IMG/1.carrito.jpg" alt="No hay servicios">
-        </div>
-        <p>No hay servicios registrados</p>
-    </article>
-</section>
+    <!-- Orquestador principal -->
+    <script type="module" src="/FUNCIONESJS/main.js"></script>
+</body>
+</html>

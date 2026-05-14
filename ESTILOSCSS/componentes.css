@@ -150,3 +150,75 @@
     color: var(--muted-foreground);
     margin-top: 8px;
 }
+
+/* ESTILOS DE LOGIN*/
+/*-----------------*/
+
+.contenedor1{
+    background-color: var(--secondary);
+    backdrop-filter: blur 5px;
+}
+
+form{
+    width: 450px;
+    height: 650px;
+    background-color: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 10px 4px, 10px, var(--primary);
+    border-radius: 20px;
+    margin: 10% auto;
+}
+
+form #img{
+    width: 300px;
+    height: 200px;
+}
+
+form input[type="password"] {
+    outline: 0;
+    border: 1px solid #ccc;
+    width: 80%;
+    padding: 10px;
+}
+
+form input[type="text"] {
+    outline: 0;
+    border: 1px solid #ccc;
+    width: 80%;
+    padding: 10px;
+}
+
+
+form label{
+    font-weight: 500;
+    padding: 10px;
+}
+
+.box-visible{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form button{
+    outline: 0;
+    border: 0;
+    background-color: var(--acent-foreground);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    width: 250px;
+    padding: 5px;
+    transition: var(--transition-lg);
+    text-align: center;
+    color: var(--secondary);
+    font-weight: 500;
+}
+
+form button:hover{
+    opacity: 0.100;
+}

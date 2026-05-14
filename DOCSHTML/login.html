@@ -5,11 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/ESTILOSCSS/main.css">
+    <link rel="stylesheet" href="/ESTILOSCSS/componentes.css">
+    <link rel="stylesheet" href="/ESTILOSCSS/base.css">
 </head>
-<body>
-    
+<body class="contenedor1">
+    <form>
+        <img src="/IMG/1.carrito.jpg" alt="img" id="img">
+        <label for="username"> Usuario</label>
+        <input type="text" id="username" placeholder="ejemplo" required>
+        <label for="password"> Usuario</label>
+        <input type="password" id="password" placeholder="contraseña" required>
+        <div class="box-visible">
+            <input type="checkbox" id="visible">
+            <label for="visible">mostrar contraseña</label>
+        </div>
+        <button type="submit" id="submit">iniciar sesion</button>
+    </form>
 
-
-    <script src="/FUNCIONESJS/main.js" type="module"></script>
+    <script src="/FUNCIONESJS/usuario.js" type="module"></script>
 </body>
 </html>

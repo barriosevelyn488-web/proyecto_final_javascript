@@ -1,3 +1,6 @@
+//AMARRADO AL INDEX//
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const appContent = document.getElementById('app-content');
     const menuNavegacion = document.querySelector('.tabs-nav'); // El padre de los botones
@@ -47,3 +50,33 @@ document.addEventListener('DOMContentLoaded', () => {
         cargarPagina(botonInicial.getAttribute('data-seccion'), botonInicial);
     }
 });
+
+import { mostrarSeccion } from './diseño.js';
+
+// 1. Capturamos los elementos del DOM (Asegúrate de que las clases coincidan)
+const secciones = document.querySelectorAll(".content_text");
+const contenedor = document.getElementById("container");
+
+// 2. Delegación de eventos para el menú de servicios
+if (contenedor) {
+    contenedor.addEventListener("click", (e) => {
+        // Buscamos el botón más cercano al clic
+        const boton = e.target.closest(".btn");
+        
+        if (boton) {
+            const idSeleccionado = boton.dataset.number;
+            // Llamamos a la función que importamos de diseño.js
+            mostrarSeccion(idSeleccionado, secciones);
+        }
+    });
+}
+
+// 3. Inicialización: Esto se ejecuta al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    // Si tienes lógica previa de otros módulos, puedes llamarla aquí
+    if (secciones.length > 0) {
+        mostrarSeccion("1", secciones); // Muestra la primera sección por defecto
+    }
+    console.log("Sistema de servicios inicializado");
+});
+

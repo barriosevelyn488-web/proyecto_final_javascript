@@ -51,4 +51,33 @@
     min-height: 400px;
 }
 
+/*--------------------------------*/
+/*PAGINA DE SERVICIOS-------------*/
+
+.content {
+    position: relative;
+    min-height: 250px; /* Espacio para que el contenido no colapse */
+    background: #fff;
+}
+
+.content_text {
+    width: 100%;
+    padding: 20px;
+    position: absolute; /* Una encima de otra */
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-20px); /* Viene desde la izquierda */
+    transition: all 0.4s ease;
+}
+
+/* La clase que activa la visualización */
+.block {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    z-index: 10;
+}
+
 
