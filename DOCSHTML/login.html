@@ -1,27 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/ESTILOSCSS/main.css">
-    <link rel="stylesheet" href="/ESTILOSCSS/componentes.css">
+    <title>Campus Parking - Login</title>
     <link rel="stylesheet" href="/ESTILOSCSS/base.css">
+    <link rel="stylesheet" href="/ESTILOSCSS/main.css">
 </head>
 <body class="contenedor1">
-    <form>
-        <img src="/IMG/1.carrito.jpg" alt="img" id="img">
-        <label for="username"> Usuario</label>
-        <input type="text" id="username" placeholder="ejemplo" required>
-        <label for="password"> Usuario</label>
-        <input type="password" id="password" placeholder="contraseña" required>
-        <div class="box-visible">
-            <input type="checkbox" id="visible">
-            <label for="visible">mostrar contraseña</label>
+    <form id="formulario-login">
+        <!-- Parte Superior: visual -->
+        <div class="seccion-oscura">
+            <div class="circulo-logo">
+                <img src="/IMG/1.carrito.jpg" alt="img" id="img">
+            </div>
+            <h1>Campus Parking</h1>
+            <p>Sistema de Gestión de Parqueadero</p>
         </div>
-        <button type="submit" id="submit">iniciar sesion</button>
+
+        <!--inputs -->
+        <div class="seccion-blanca">
+            <div class="grupo-input">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" placeholder="ejemplo Admin@gmail.com">
+            </div>
+            <div class="grupo-input">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="contraseña">
+            </div>
+            <div class="box-visible">
+                <input type="checkbox" id="visible">
+                <label for="visible">mostrar contraseña</label>
+            </div>
+            <button type="submit" id="submit">iniciar sesion</button>
+            <p id="mensaje-error">Usuario o contraseña incorrectos</p>
+        </div>
     </form>
 
-    <script src="/FUNCIONESJS/usuario.js" type="module"></script>
+    <script src="/FUNCIONESJS/main.js"></script>
+    <script src="/FUNCIONESJS/usuario.js"></script>
 </body>
 </html>
