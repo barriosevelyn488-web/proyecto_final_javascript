@@ -14,17 +14,22 @@
         }
     });
 
-    document.addEventListener("click", (e)=>{
-        if(e.target === $submit){
-            e.preventDefault();
-            if($password.value === "ABC123" && $username.value === "Admin@campus.com"){
-                $error.style.display = "none";
-                window.location.href = "index.html";
-            }
-        } else{
+    document.addEventListener("click", (e) => {
+    if (e.target === $submit) {
+        // 1. PRIMERO QUE NADA: Detenemos la recarga de la página
+        e.preventDefault(); 
+
+        // 2. AHORA validamos
+        if ($password.value === "Admin123" && $username.value === "admin@campusparking.com") {
+            // Si es correcto, ocultamos error y entramos
+            $error.style.display = "none";
+            window.location.href = "index.html";
+        } else {
+            // SI ESTÁ MAL: El mensaje se quedará fijo porque el preventDefault evitó la recarga
             $error.style.display = "block";
-            $password.value = "";
+            $password.value = ""; // Limpiamos solo la contraseña por seguridad
         }
-    })
+    }
+});
 
 

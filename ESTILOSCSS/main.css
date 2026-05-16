@@ -2,7 +2,7 @@
 MAIN CONTROLER - ARCHIVO MAESTRO DE ESTILOS
    ========================================================================== */
 
-   @import "./base.css";        /* Reseteo y variables */
+   @import "./base.css";        /* variables */
    @import "./layout.css";      /* Estructura (Header, Main, Footer) */
    @import "./componentes.css";  /* Botones, Cards, Inputs */
-   @import "./responsive.css";   /* Media queries (siempre al final) */
+   @import "./responsive.css";   /* Media queries  */

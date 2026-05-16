@@ -1,19 +1,43 @@
-<!-- Vista de Tipos de Vehículos -->
 <section class="contenedor-vista fade-in">
     <header class="encabezado-seccion">
         <div class="titulos">
             <h2>Tipos de Vehículos</h2>
             <p class="stats">Gestión de tipos de vehículos y tarifas por hora</p>
         </div>
-        <button class="btn-principal">
+        <button class="btn-principal" id="btn-abrir-tipo">
             <span>+</span> Nuevo Tipo
         </button>
     </header>
 
-    <!-- Área de visualización de tipos -->
+    <dialog id="modal-nuevo-tipo" class="modal-dialog">
+        <form id="formulario-nuevo-tipo" method="dialog" class="formulario-card">
+            <h3>Nuevo Tipo de Vehículo</h3>
+            
+            <div class="campos-horizontales">
+                <div class="grupo-input">
+                    <label>Código *</label>
+                    <input type="text" id="input-codigo" placeholder="Ej: AUTO" required>
+                </div>
+                <div class="grupo-input">
+                    <label>Nombre *</label>
+                    <input type="text" id="input-nombre" placeholder="Ej: Automóvil" required>
+                </div>
+                <div class="grupo-input">
+                    <label>Tarifa/Hora (COP) *</label>
+                    <input type="number" id="input-tarifa" placeholder="Ej: 3000" required>
+                </div>
+            </div>
+
+            <div class="botones-formulario">
+                <button type="button" id="btn-cancelar-tipo" class="btn-secundario">Cancelar</button>
+                <button type="submit" id="btn-guardar-tipo" class="btn-guardar">Guardar</button>
+            </div>
+        </form>
+    </dialog>
+
     <article class="pantalla-vacia">
         <div class="ilustracion">
-            <img src="/IMG/1.carrito.jpg alt="No hay tipos">
+            <img src="/IMG/1.carrito.jpg" id="vacio" alt="No hay tipos">
         </div>
         <p>No hay tipos de vehículos registrados</p>
         <span class="sub-texto">Crea el primer tipo para comenzar</span>

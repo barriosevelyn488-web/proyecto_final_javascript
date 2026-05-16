@@ -1,3 +1,5 @@
+/*RESPONSIVE INDEX */
+/*----------------*/
 @media (max-width: 768px) {
     .barra-superior {
         flex-direction: column;
@@ -5,6 +7,7 @@
         padding: var(--spacing-4);
         gap: var(--spacing-4);
         align-items: center;
+        height: 500px;
     }
 
     .container-logo {
@@ -12,7 +15,9 @@
         justify-content: flex-start;
     }
 
-    .subtitulo-app { display: none; }
+    .subtitulo-app { 
+        font-size: var(--font-size-xs);
+    }
 
     .acciones-header {
         width: 100%;
@@ -24,11 +29,17 @@
     .perfil-btn, .exit-btn {
         flex: 1;
         max-width: 150px;
+        height: auto;
+        gap: 20px;
+        padding: auto;
+        width: 200px;
+        height: 35px;
     }
 
     .tabs-nav {
         padding: 0;
         gap: 0;
+        height: 60px;
     }
 
     .tab-btn {
@@ -39,6 +50,167 @@
     .subtitulo-app { 
         font-size: var(--font-size-md); 
         color: var(--muted-foreground); 
+        font-size: var(--font-size-md);
     }
 }
 
+/* =========================================
+RESPONSIVE: LOGIN (ESTILO TARJETA CENTRADA)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /* El contenedor padre debe centrar todo y ocupar el 100% de la vista */
+    .contenedor1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%); /* Tu color oscuro */
+    }
+
+    /* El formulario se convierte en una tarjeta */
+    form {
+        width: 100%;
+        max-width: 350px; /* Ancho máximo para que no se vea gigante */
+        height: auto;
+        border-radius: 20px; 
+        overflow: hidden; 
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        background-color: #f4f7f6; 
+    }
+
+    /* Sección oscura superior del login */
+    .seccion-oscura {
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #img {
+        width: 80px; /* Logo más discreto */
+    }
+
+    .seccion-oscura h1 {
+        font-size: 1.4rem;
+    }
+
+    /* Sección blanca de inputs */
+    .seccion-blanca {
+        padding: 25px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    input[type="text"], 
+    input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 16px; 
+    }
+
+    #submit {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+}
+
+
+/* =========================================
+RESPONSIVE: VISTA DE TIPOS
+   ========================================= */
+@media (max-width: 768px) {
+    .encabezado-seccion {
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: var(--spacing-4);
+    }
+
+    .btn-principal {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .pantalla-vacia {
+        padding: 40px 20px;
+        margin: 10px;
+    }
+
+    #vacio {
+        width: 70px; 
+    }
+
+    .pantalla-vacia p {
+        font-size: var(--font-size-lg);
+    }
+}
+
+@media (max-width: 480px) {
+    .titulos h2 {
+        font-size: var(--font-size-xl);
+    }
+    
+    .stats {
+        font-size: var(--font-size-xs);
+    }
+}
+
+@media (max-width: 650px) {
+    .barra-superior {
+        height: auto;
+        padding: var(--spacing-4);
+        flex-wrap: wrap; 
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .container-logo {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .textos-logo {
+        text-align: center;
+    }
+}
+
+
+/* ==========================================================================
+ADAPTACIÓN  (TELÉFONOS MÓVILES) TIPOS
+   ========================================================================== */
+@media (max-width: 600px) {
+    .modal-dialog {
+        width: 92%;
+    }
+
+    .formulario-card {
+        padding: 20px; 
+    }
+
+    /* Pasa los inputs de horizontal a una columna vertical ordenada */
+    .campos-horizontales {
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+
+
+    .botones-formulario {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .btn-secundario, 
+    .btn-guardar {
+        width: 100%;
+        text-align: center;
+        padding: 14px;
+    }
+}

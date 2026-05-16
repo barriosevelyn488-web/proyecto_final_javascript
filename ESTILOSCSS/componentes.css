@@ -1,10 +1,16 @@
-/* Botones de Perfil y Salir */
+/* ==========================================================================
+ESTILOS DE COMPONENTES VISUALES (BOTONES, INPUTS Y ESTADOS ESPECÍFICOS)
+   ========================================================================== */
+
+/* --- COMPONENTES DE INDEX (Pestañas y Perfil) --- */
 .perfil-btn, .exit-btn {
     padding: var(--spacing-2) var(--spacing-4);
     border-radius: var(--radius-md);
     font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: var(--transition-fast);
+    height: 45px;
+    width: 100px;
 }
 
 .perfil-btn {
@@ -19,14 +25,15 @@
     border: none;
 }
 
-.exit-btn:hover { opacity: 0.9; transform: scale(1.05); }
-
-.perfil-btn:hover{
+.exit-btn:hover{
     opacity: 0.9;
     transform: scale(1.05);
 }
 
-/* --- ESTILOS DE PESTAÑAS (TABS JAVASCRIPT) --- */
+.perfil-btn:hover {
+    background-color: var(--muted-foreground);
+    opacity: 0.8;
+}
 
 .tab-btn {
     padding: var(--spacing-3) var(--spacing-6);
@@ -35,169 +42,22 @@
     cursor: pointer;
     color: var(--muted-foreground);
     font-weight: var(--font-weight-semibold);
-    /* Reservamos el espacio del borde para que el botón no "salte" al activarse */
-    border-bottom: 3px solid transparent; 
+    border-bottom: 3px solid transparent;
     transition: all var(--transition-fast);
 }
 
-/* El hover se aplica cuando pasa el mouse */
-.tab-btn:hover {
-    color: var(--primary);
-}
+.tab-btn:hover { color: var(--primary); }
 
-/* ESTADO ACTIVO*/
-/* Al usar .tab-btn.active (clase + clase), la especificidad sube 
-   naturalmente y ganará sobre .tab-btn por sí sola */
 .tab-btn.active {
     color: var(--primary);
-    border-bottom: 3px solid var(--info); /* Tu azul del root */
+    border-bottom: 3px solid var(--info);
 }
 
-/* --- CONTENEDORES DE VISTA --- */
-.contenedor-vista {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-6);
-}
-
-.encabezado-seccion {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.encabezado-seccion h2 {
-    font-size: var(--font-size-2xl);
-    color: var(--primary);
-}
-
-.stats {
-    font-size: var(--font-size-sm);
-    color: var(--muted-foreground);
-    margin-top: 4px;
-}
-
-/* --- BOTÓN NUEVO INGRESO/TIPO --- */
-.btn-principal {
-    background-color: var(--primary); /* El negro profundo de el root */
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: var(--radius-md);
-    font-weight: var(--font-weight-bold);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: var(--transition-fast);
-}
-
-.btn-principal:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-}
-
-/* --- FILTROS INTERNOS (SUB-NAV) --- */
-.filtros-internos {
-    display: flex;
-    gap: var(--spacing-4);
-    border-bottom: 1px solid var(--border);
-}
-
-.filter-btn {
-    background: none;
-    border: none;
-    padding: 12px 16px;
-    cursor: pointer;
-    color: var(--muted-foreground);
-    font-weight: var(--font-weight-semibold);
-    border-bottom: 2px solid transparent;
-}
-
-.filter-btn.active {
-    color: var(--primary);
-    border-bottom: 2px solid var(--primary);
-}
-
-/* --- ESTADO VACÍO (CARDS) --- */
-.pantalla-vacia {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-16);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color: white;
-    min-height: 300px;
-}
-
-.ilustracion img {
-    width: 80px;
-    opacity: 0.3;
-    margin-bottom: var(--spacing-4);
-    filter: grayscale(1);
-}
-
-.pantalla-vacia p {
-    font-weight: var(--font-weight-medium);
-    color: var(--muted-foreground);
-}
-
-.sub-texto {
-    font-size: var(--font-size-xs);
-    color: var(--muted-foreground);
-    margin-top: 8px;
-}
-
-/* ESTILOS DE LOGIN*/
-/*-----------------*/
-
-/*  fondo con degradado */
-.contenedor1 {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-    margin: 0;
-}
-
-form {
-    width: 490px;
-    height: 590px;
-    background-color: var(--secondary); /* Color de la parte de abajo */
-    border-radius: 20px;
-    overflow: hidden; 
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-    display: flex;
-    flex-direction: column;
-}
-.seccion-oscura {
-    background-color: var(--primary);
-    padding: 35px;
-    text-align: center;
-    color: var(--secondary);
-}
-
-
+/* --- COMPONENTES DE LOGIN --- */
+/*-------------------------------*/
 #img {
     width: 130px;
     backdrop-filter: blur;
-
-}
-.seccion-blanca {
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.grupo-input {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
 }
 
 .grupo-input label {
@@ -206,7 +66,6 @@ form {
     margin-bottom: 5px;
 }
 
-/* Tus estilos de input respetados */
 input[type="text"], input[type="password"] {
     padding: 12px;
     border: 1px solid var(--secondary);
@@ -234,13 +93,11 @@ input[type="text"], input[type="password"] {
     transition: 0.3s;
 }
 
-#submit:hover {
-    background-color: #302b63;
-}
+#submit:hover { background-color: #302b63; }
 
 #mensaje-error {
     display: none;
-    color: #ff4d4d;
+    color: var(--destructive);
     font-size: 0.8rem;
     margin-top: 10px;
     text-align: center;
@@ -251,3 +108,299 @@ input[type="text"], input[type="password"] {
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
 }
+
+/* --- COMPONENTES DE SERVICIOS Y VISTAS --- */
+.encabezado-seccion {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.encabezado-seccion h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--primary);
+}
+
+.stats {
+    font-size: var(--font-size-sm);
+    color: var(--muted-foreground);
+    margin-top: 4px;
+}
+
+.btn-nuevo-ingreso-serv {
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition-fast);
+}
+
+.btn-nuevo-ingreso-serv:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.filter-bar-serv {
+    display: flex;
+    gap: 25px;
+    border-bottom: 2px solid var(--secondary);
+    margin-bottom: 20px;
+}
+
+.filter-item-serv {
+    background: none;
+    border: none;
+    padding: 12px 5px;
+    color: var(--muted-foreground);
+    font-size: 1rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+}
+
+.filter-item-serv.active {
+    color: var(--primary);
+    font-weight: bold;
+    border-bottom: 3px solid var(--primary);
+}
+
+.empty-state-serv {
+    background-color: var(--secondary);
+    border: 2px solid #f5f5f5;
+    border-radius: 20px;
+    padding: 80px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.empty-icon-serv {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    opacity: 0.3;
+}
+
+.empty-state-serv p {
+    color: var(--muted-foreground);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+
+/* =========================================
+ESTILOS ESPECÍFICOS DE PANTALLA VACÍA (TIPOS)
+   ========================================= */
+
+/* 1. El contenedor principal (La tarjeta gris) */
+.pantalla-vacia {
+    background-color: var(--secondary); 
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-16) var(--spacing-8);
+    width: 100%;
+    height: 650px;
+    max-width: 900px;
+    margin: 20px auto 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    box-shadow: var(--shadow-sm);
+}
+
+/* 2. El contenedor de la imagen */
+.pantalla-vacia .ilustracion {
+    background: transparent !important;
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-4);
+}
+
+/* 3. La imagen del carrito (ID vacio) */
+#vacio {
+    width: 100px;
+    margin-top: 30px;
+    height: auto;
+    opacity: 0.4;
+    filter: grayscale(100%); 
+    background: transparent !important;
+}
+
+/* 4. Textos */
+.pantalla-vacia p {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-medium);
+    color: var(--muted-foreground);
+    margin: 0;
+}
+
+.pantalla-vacia .sub-texto {
+    font-size: var(--font-size-sm);
+    color: var(--muted-foreground);
+    opacity: 0.7;
+}
+
+/* --- BOTÓN NUEVO TIPO --- */
+.btn-principal {
+    background-color: var(--primary);
+    color: white;
+    padding: 14px 28px; 
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    transition: all var(--transition-fast);
+}
+
+.btn-principal:hover {
+    background-color: #302b63;
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================================================
+ESTILOS CONTROL DE DIALOG (NUEVO TIPO DE VEHÍCULO)
+   ========================================================================== */
+
+/* 1. Contenedor de la Ventana  (Limpio y sin paddings que choquen) */
+.modal-dialog {
+    border: none;
+    border-radius: 16px;
+    padding: 0; 
+    width: 90%;
+    max-width: 660px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    
+    /* Centrado  en la pantalla */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+}
+
+/* 2. Capa de Fondo Oscuro Detrás del Dialog */
+.modal-dialog::backdrop {
+    background-color: rgba(7, 11, 25, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+
+.formulario-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 30px; 
+    box-sizing: border-box; 
+}
+
+.formulario-card h3 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    color: #070b19;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+/* 4. Distribución de Inputs (Escritorio) */
+.campos-horizontales {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    margin-bottom: 28px;
+    width: 100%;
+}
+
+.grupo-input {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.grupo-input label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.grupo-input input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.grupo-input input:focus {
+    outline: none;
+    border-color: #070b19;
+    background-color: #ffffff;
+}
+
+.grupo-input input:disabled {
+    background-color: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+
+.botones-formulario {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+/* Botón Cancelar */
+.btn-secundario {
+    background-color: #e2e8f0;
+    color: #475569;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-secundario:hover {
+    background-color: #cbd5e1;
+}
+
+/* Botón Guardar */
+.btn-guardar {
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-guardar:hover {
+    opacity: 0.9;
+}
+

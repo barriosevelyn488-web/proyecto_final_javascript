@@ -1,4 +1,8 @@
-/* Header Principal */
+/* ==========================================================================
+ESTILOS DE ESTRUCTURA Y LAYOUT GLOBAL (INDEX, LOGIN Y SERVICIOS)
+   ========================================================================== */
+
+/* --- ESTRUCTURA DE INDEX (Header y Navegación) --- */
 .barra-superior {
     background-color: var(--primary);
     color: var(--primary-foreground);
@@ -6,7 +10,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 var(--spacing-8);
-    height: 75px;
+    height: 100px;
     box-shadow: var(--shadow-md);
 }
 
@@ -18,25 +22,24 @@
     color: inherit;
 }
 
-#carrito { 
-    height: 45px; 
-    width: auto; 
+#carrito {
+    height: 60px;
+    width: auto;
     border-radius: var(--radius-sm);
 }
 
 .textos-logo { display: flex; flex-direction: column; }
 
-.nombre-app { 
-    font-size: var(--font-size-xl); 
-    font-weight: var(--font-weight-bold); 
+.nombre-app {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
 }
 
-.subtitulo-app { 
-    font-size: var(--font-size-xs); 
-    color: var(--muted-foreground); 
+.subtitulo-app {
+    font-size: var(--font-size-md);
+    color: var(--muted-foreground);
 }
 
-/* Contenedor de las pestañas */
 .tabs-nav {
     display: flex;
     background-color: var(--secondary);
@@ -45,34 +48,94 @@
     gap: var(--spacing-6);
 }
 
-/* Espacio dinámico para el contenido (H1, Grids, etc) */
-#app-content { 
-    padding: var(--spacing-8); 
+#app-content {
+    padding: var(--spacing-8);
     min-height: 400px;
 }
 
-/*--------------------------------*/
-/*PAGINA DE SERVICIOS-------------*/
+/* --- ESTRUCTURA DE LOGIN --- */
+.contenedor1 {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    margin: 0;
+}
+
+form {
+    width: 490px;
+    height: 590px;
+    background-color: var(--secondary);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+}
+
+.seccion-oscura {
+    background-color: var(--primary);
+    padding: 35px;
+    text-align: center;
+    color: var(--secondary);
+}
+
+.seccion-blanca {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.grupo-input {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+/* --- ESTRUCTURA DE SERVICIOS Y VISTAS --- */
+.contenedor-vista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+.main-content-serv {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.display-area-serv {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.module-info-serv {
+    margin-bottom: 30px;
+}
 
 .content {
     position: relative;
-    min-height: 250px; /* Espacio para que el contenido no colapse */
+    min-height: 250px;
     background: #fff;
 }
 
 .content_text {
     width: 100%;
     padding: 20px;
-    position: absolute; /* Una encima de otra */
+    position: absolute;
     top: 0;
     left: 0;
     opacity: 0;
     visibility: hidden;
-    transform: translateX(-20px); /* Viene desde la izquierda */
+    transform: translateX(-20px);
     transition: all 0.4s ease;
 }
 
-/* La clase que activa la visualización */
 .block {
     opacity: 1;
     visibility: visible;
@@ -80,4 +143,34 @@
     z-index: 10;
 }
 
+/* --- ESTRUCTURA ESPECÍFICA DE TIPOS --- */
+
+.contenedor-vista {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-8) var(--spacing-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+}
+
+.encabezado-seccion {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    gap: var(--spacing-6);
+}
+
+.titulos h2 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary);
+    margin: 0 0 var(--spacing-1);
+}
+
+.stats {
+    font-size: var(--font-size-base);
+    color: var(--muted-foreground);
+    margin: 0;
+}
 
