@@ -144,7 +144,7 @@ form {
 }
 
 /* --- ESTRUCTURA ESPECÍFICA DE TIPOS --- */
-
+/*=========================================*/
 .contenedor-vista {
     max-width: 1200px;
     margin: 0 auto;
@@ -174,3 +174,16 @@ form {
     margin: 0;
 }
 
+/* ==========================================================================
+SECCIÓN 1: LAYOUT (Contenedor de Tarjetas)
+   ========================================================================== */
+
+/* Este es el contenedor JS crea o busca con la clase '.grid-tipos' */
+.grid-tipos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+    width: 100%;
+    box-sizing: border-box;
+}

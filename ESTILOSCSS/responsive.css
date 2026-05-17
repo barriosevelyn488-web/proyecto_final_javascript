@@ -214,3 +214,51 @@ ADAPTACIÓN  (TELÉFONOS MÓVILES) TIPOS
         padding: 14px;
     }
 }
+
+/* ==========================================================================
+SECCIÓN 4: AJUSTES RESPONSIVE Y CONTROL DE DESBORDAMIENTO
+   ========================================================================== */
+
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden; 
+}
+
+/* 2. Ajustar el contenedor general de tus vistas */
+.contenedor-vista {
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto;    
+    padding: 16px;   
+    box-sizing: border-box;
+}
+
+/* 3. Asegurar que el Header oscuro de Campus Parking se encoja correctamente */
+header, 
+.header-principal,
+.navbar { 
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    padding: 12px 20px !important;
+}
+
+/* 4. Controlar el Encabezado interno (Título + Botón Nuevo Tipo) cuando la pantalla es pequeña */
+@media (max-width: 600px) {
+    .encabezado-seccion {
+        display: flex;
+        flex-direction: column; 
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .btn-principal {
+        width: 100%; 
+        text-align: center;
+    }
+
+    .grid-tipos {
+        grid-template-columns: 1fr !important; 
+        gap: 16px;
+    }
+}
