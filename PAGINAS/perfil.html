@@ -1,0 +1,45 @@
+<dialog id="modal-perfil" class="modal-dialog">
+    
+    <div class="modal-header">
+        <div class="header-titulo-agrupador">
+            <h2>👤 Mi Perfil</h2>
+        </div>
+        <button type="button" class="cerrar-modal-x">&times;</button>
+    </div>
+    
+    <form id="formulario-perfil" class="modal-formulario">
+        
+        <div class="form-grupo">
+            <label for="perfil-nombre">Nombre</label>
+            <input type="text" id="perfil-nombre" name="nombre" required>
+        </div>
+
+        <div class="form-grupo">
+            <label for="perfil-email">Email</label>
+            <input type="email" id="perfil-email" name="email" required>
+        </div>
+
+        <p class="cambiar-pass-opcional">Cambiar Contraseña (opcional)</p>
+
+        <div class="form-grupo">
+            <label for="perfil-pass-actual">Contraseña Actual</label>
+            <input type="password" id="perfil-pass-actual" name="passActual" placeholder="••••••••">
+        </div>
+
+        <div class="form-grupo">
+            <label for="perfil-pass-nueva">Nueva Contraseña</label>
+            <input type="password" id="perfil-pass-nueva" name="passNueva">
+        </div>
+
+        <div class="form-grupo">
+            <label for="perfil-pass-confirmar">Confirmar Nueva Contraseña</label>
+            <input type="password" id="perfil-pass-confirmar" name="passConfirmar">
+        </div>
+
+        <div class="modal-acciones-pie">
+            <button type="button" id="btn-cancelar-perfil" class="btn-secundario">Cancelar</button>
+            <button type="submit" id="btn-guardar-perfil" class="btn-primario">Guardar Cambios</button>
+        </div>
+
+    </form>
+</dialog>

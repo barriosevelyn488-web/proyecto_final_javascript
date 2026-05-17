@@ -23,3 +23,42 @@
     </section>
 
 </main>
+
+<dialog id="modal-nuevo-ingreso" class="modal-figma">
+    <div class="modal-header">
+        <h3>Nuevo Ingreso de Vehículo</h3>
+        <p>Registre la entrada del vehículo al parqueadero</p>
+    </div>
+    
+    <form id="formulario-nuevo-ingreso">
+        
+        <div class="grupo-formulario">
+            <label for="ingreso-placa">Placa *</label>
+            <input type="text" id="ingreso-placa" placeholder="Ej. P-123ABC" required autocomplete="off">
+        </div>
+
+        <div class="grupo-formulario">
+            <label for="ingreso-tipo">Tipo de Vehículo *</label>
+            <select id="ingreso-tipo" required>
+                <option value="" disabled selected>Seleccione un tipo...</option>
+            </select>
+        </div>
+
+        <div class="grupo-formulario">
+            <label for="ingreso-slot">Número de Slot / Espacio *</label>
+            <input type="number" id="ingreso-slot" min="1" max="100" placeholder="Ej. 45" required>
+        </div>
+
+        <div class="grupo-formulario">
+            <label for="ingreso-hora-entrada">Hora de Ingreso / Entrada *</label>
+            <input type="time" id="ingreso-hora-entrada" required>
+        </div>
+
+        <div class="modal-acciones">
+            <button type="button" id="btn-cancelar-ingreso" class="btn-accion-card btn-editar-tipo">Cancelar</button>
+            <button type="submit" id="btn-guardar-ingreso" class="btn-accion-card btn-salida-servicio">
+                Guardar Ingreso
+            </button>
+        </div>
+    </form>
+</dialog>
