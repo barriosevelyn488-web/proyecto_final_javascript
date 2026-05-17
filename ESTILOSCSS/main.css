@@ -4,5 +4,7 @@ MAIN CONTROLER - ARCHIVO MAESTRO DE ESTILOS
 
    @import "./base.css";        /* variables */
    @import "./layout.css";      /* Estructura (Header, Main, Footer) */
-   @import "./componentes.css";  /* Botones, Cards, Inputs */
+   @import url('logincomponents.css');
+   @import url('Interfazcomponents.css');
+   @import url('modalescomponents.css');  /* Botones, Cards, Inputs */
    @import "./responsive.css";   /* Media queries  */

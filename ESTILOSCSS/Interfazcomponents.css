@@ -1,0 +1,223 @@
+/* ==========================================================================
+MODULO 2: ESTRUCTURA DEL DASHBOARD, TARJETAS Y CONTENEDORES
+   ========================================================================== */
+
+/* --- Botones de la barra superior (Header) --- */
+.perfil-btn, .exit-btn {
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    height: 45px;
+    width: 100px;
+}
+
+.perfil-btn {
+    background: transparent;
+    color: var(--primary-foreground);
+    border: 1px solid var(--border);
+}
+
+.exit-btn {
+    background-color: var(--destructive);
+    color: var(--destructive-foreground);
+    border: none;
+}
+
+.exit-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.perfil-btn:hover {
+    background-color: var(--muted-foreground);
+    opacity: 0.8;
+}
+
+/* --- Control de Pestañas Navegables (Tabs) --- */
+.tab-btn {
+    padding: var(--spacing-3) var(--spacing-6);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    font-weight: var(--font-weight-semibold);
+    border-bottom: 3px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.tab-btn:hover { 
+    color: var(--primary); 
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom: 3px solid var(--info);
+}
+
+/* --- Cabeceras de Sección e Indicadores --- */
+.encabezado-seccion {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.encabezado-seccion h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--primary);
+}
+
+.stats {
+    font-size: var(--font-size-sm);
+    color: var(--muted-foreground);
+    margin-top: 4px;
+}
+
+/* --- Botón e Indicadores de Filtros en Servicios --- */
+.btn-nuevo-ingreso-serv {
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition-fast);
+}
+
+.btn-nuevo-ingreso-serv:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.filter-bar-serv {
+    display: flex;
+    gap: 25px;
+    border-bottom: 2px solid var(--secondary);
+    margin-bottom: 20px;
+}
+
+.filter-item-serv {
+    background: none;
+    border: none;
+    padding: 12px 5px;
+    color: var(--muted-foreground);
+    font-size: 1rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+}
+
+.filter-item-serv.active {
+    color: var(--primary);
+    font-weight: bold;
+    border-bottom: 3px solid var(--primary);
+}
+
+/* --- DISEÑO CONTROLADO DE TARJETAS DE VEHÍCULOS (Protegido) --- */
+.grid-tipos, #grid-servicios-operativos {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.tarjeta-vehiculo {
+    background-color: #ffffff !important;
+    border: 1px solid var(--border, #e2e8f0) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s;
+}
+
+.tarjeta-vehiculo:hover {
+    transform: translateY(-4px);
+}
+
+/* --- Estados de Pantalla Vacía (Servicios y Tipos Separados) --- */
+.empty-state-serv,
+.pantalla-vacia {
+    background-color: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-16) var(--spacing-8);
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    box-shadow: var(--shadow-sm);
+}
+
+.pantalla-vacia {
+    height: 650px;
+}
+
+.empty-state-serv {
+    padding: 80px 20px;
+}
+
+.empty-icon-serv,
+.pantalla-vacia .ilustracion {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    opacity: 0.3;
+    background: transparent !important;
+    display: flex;
+    justify-content: center;
+}
+
+#vacio {
+    width: 100px;
+    margin-top: 30px;
+    height: auto;
+    opacity: 0.4;
+    filter: grayscale(100%);
+    background: transparent !important;
+}
+
+.empty-state-serv p,
+.pantalla-vacia p {
+    color: var(--muted-foreground);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.pantalla-vacia .sub-texto {
+    font-size: var(--font-size-sm);
+    color: var(--muted-foreground);
+    opacity: 0.7;
+}
+
+.btn-principal {
+    background-color: var(--primary);
+    color: white;
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    transition: all var(--transition-fast);
+}
+
+.btn-principal:hover {
+    background-color: #302b63;
+    transform: translateY(-2px);
+}

@@ -1,0 +1,63 @@
+/* ==========================================================================
+MODULO 1: COMPONENTES DE LA PANTALLA DE LOGIN
+   ========================================================================== */
+
+#img {
+    width: 130px;
+    backdrop-filter: blur;
+}
+
+.grupo-input label {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Forzado estricto pero limitado únicamente al contenedor de tu login */
+.login-container input[type="text"], 
+.login-container input[type="password"],
+#formulario-login input[type="text"],
+#formulario-login input[type="password"] {
+    padding: 12px;
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+    background-color: var(--accent);
+    width: 100% !important;
+}
+
+.box-visible {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+}
+
+#submit {
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#submit:hover { 
+    background-color: #302b63; 
+}
+
+#mensaje-error {
+    display: none;
+    color: var(--destructive);
+    font-size: 0.8rem;
+    margin-top: 10px;
+    text-align: center;
+}
+
+@keyframes sacudir {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
