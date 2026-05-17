@@ -91,20 +91,30 @@ export const obtenerPerfil = () => {
     if (!datos) {
         return [{
             nombre: "Administrador",
-            email: "admin@campusparking.com",
+            email: "admin@campus12.com",
             contrasena: "Admin123" 
         }];
     }
-    return JSON.parse(datos);
+    try {
+        return JSON.parse(datos);
+    } catch (e) {
+        // En caso de que el JSON viejo esté corrupto, devolvemos el estado por defecto seguro
+        return [{
+            nombre: "Administrador",
+            email: "admin@campus12.com",
+            contrasena: "Admin123"
+        }];
+    }
 };
 
 export const guardarPerfil = (datosActualizados) => {
     const perfilExistente = obtenerPerfil()[0];
     
+    // CORRECCIÓN AQUÍ: Leemos 'contrasena' que es el nombre exacto enviado por main.js
     const perfilFinal = {
         nombre: datosActualizados.nombre,
         email: datosActualizados.email,
-        contrasena: datosActualizados.nuevaContrasena ? datosActualizados.nuevaContrasena : perfilExistente.contrasena
+        contrasena: datosActualizados.contrasena ? datosActualizados.contrasena : perfilExistente.contrasena
     };
 
     localStorage.setItem('perfil', JSON.stringify([perfilFinal]));
