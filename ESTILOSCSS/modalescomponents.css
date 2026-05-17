@@ -291,3 +291,146 @@ dialog.perfil-dialog-nativo .modal-acciones-pie button.btn-primario {
     background-color: #0f172a;
     color: #ffffff;
 }
+
+/* --------------------------------------------------------------------------
+C) DIALOG: NUEVO TIPO DE VEHÍCULO (PESTAÑA TIPOS) - RESCATADO
+   -------------------------------------------------------------------------- */
+
+/* Buscamos el diálogo nativo o contenedor que uses para registrar tipos */
+dialog#modal-nuevo-tipo, 
+dialog.modal-tipo-vehiculo {
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    width: 90%;
+    max-width: 440px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* Backdrop para el fondo oscuro */
+dialog#modal-nuevo-tipo::backdrop,
+dialog.modal-tipo-vehiculo::backdrop {
+    background-color: rgba(7, 11, 25, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+/* Si tu estructura usa un contenedor tipo formulario-card interno */
+dialog#modal-nuevo-tipo form,
+dialog.modal-tipo-vehiculo form {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Ajuste de los títulos del formulario */
+dialog#modal-nuevo-tipo h2,
+dialog.modal-tipo-vehiculo h2,
+dialog#modal-nuevo-tipo h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #070b19;
+    font-size: 1.35rem;
+    font-weight: 700;
+    text-align: left;
+}
+
+/* Contenedores de los campos (inputs con sus labels) */
+dialog#modal-nuevo-tipo .form-grupo,
+dialog.modal-tipo-vehiculo .grupo-formulario,
+dialog.modal-tipo-vehiculo div:has(input) {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Estilos de las etiquetas de texto */
+dialog#modal-nuevo-tipo label,
+dialog.modal-tipo-vehiculo label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d3748;
+    text-align: left;
+}
+
+/* Cuadrando las cajas de texto (Inputs) */
+dialog#modal-nuevo-tipo input,
+dialog.modal-tipo-vehiculo input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, background-color 0.2s;
+    outline: none;
+    color: #334155;
+}
+
+dialog#modal-nuevo-tipo input:focus,
+dialog.modal-tipo-vehiculo input:focus {
+    border-color: #070b19;
+    background-color: #ffffff;
+}
+
+/* Ajuste para la fila de botones (Cancelar y Guardar) */
+dialog#modal-nuevo-tipo .modal-acciones,
+dialog.modal-tipo-vehiculo .modal-acciones,
+dialog.modal-tipo-vehiculo form > div:last-child {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 8px;
+    box-sizing: border-box;
+}
+
+/* Botón Cancelar de tipos */
+dialog#modal-nuevo-tipo button[type="button"],
+dialog.modal-tipo-vehiculo button#btn-cancelar,
+dialog.modal-tipo-vehiculo button:first-of-type {
+    background-color: #e2e8f0;
+    color: #475569;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex: 1;
+}
+
+/* Botón Guardar de tipos */
+dialog#modal-nuevo-tipo button[type="submit"],
+dialog.modal-tipo-vehiculo button#btn-guardar,
+dialog.modal-tipo-vehiculo button:last-of-type {
+    background-color: var(--primary, #070b19);
+    color: var(--secondary, #ffffff);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    flex: 1;
+}
+
+dialog#modal-nuevo-tipo button:hover,
+dialog.modal-tipo-vehiculo button:hover {
+    opacity: 0.9;
+}
