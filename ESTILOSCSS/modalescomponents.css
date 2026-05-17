@@ -1,9 +1,9 @@
 /* ==========================================================================
-MODULO 3: ESTILOS DE MODALES NATIVOS (<dialog>)
+MODULO 3: ESTILOS DE MODALES  (<dialog>)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-A) DIALOG: NUEVO INGRESO (VEHÍCULOS)
+A) DIALOG: NUEVO INGRESO  SERVICIOS (VEHÍCULOS)
    -------------------------------------------------------------------------- */
 dialog#modal-nuevo-ingreso {
     border: none;
@@ -292,38 +292,37 @@ dialog.perfil-dialog-nativo .modal-acciones-pie button.btn-primario {
     color: #ffffff;
 }
 
-/* --------------------------------------------------------------------------
-C) DIALOG: NUEVO TIPO DE VEHÍCULO (PESTAÑA TIPOS) - RESCATADO
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+CORRECCIÓN VISUAL: MODAL Y BOTONES DE LA PESTAÑA DE TIPOS
+   ========================================================================== */
 
-/* Buscamos el diálogo nativo o contenedor que uses para registrar tipos */
-dialog#modal-nuevo-tipo, 
-dialog.modal-tipo-vehiculo {
+/* 1. POSICIONAMIENTO Y CENTRADO DEL MODAL NATIVO (<dialog>) */
+dialog#modal-nuevo-tipo.modal-dialog {
     border: none;
     border-radius: 16px;
     padding: 0;
     width: 90%;
     max-width: 440px;
     background-color: #ffffff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    
+    /* Centrado absoluto en la pantalla */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    box-sizing: border-box;
     margin: 0;
+    box-sizing: border-box;
 }
 
-/* Backdrop para el fondo oscuro */
-dialog#modal-nuevo-tipo::backdrop,
-dialog.modal-tipo-vehiculo::backdrop {
-    background-color: rgba(7, 11, 25, 0.4);
+/* Capa de fondo oscuro detrás del modal */
+dialog#modal-nuevo-tipo.modal-dialog::backdrop {
+    background-color: rgba(7, 11, 25, 0.5);
     backdrop-filter: blur(4px);
 }
 
-/* Si tu estructura usa un contenedor tipo formulario-card interno */
-dialog#modal-nuevo-tipo form,
-dialog.modal-tipo-vehiculo form {
+/* Estructura interna del formulario */
+dialog#modal-nuevo-tipo .formulario-card {
     display: flex;
     flex-direction: column;
     padding: 30px;
@@ -331,42 +330,40 @@ dialog.modal-tipo-vehiculo form {
     width: 100%;
 }
 
-/* Ajuste de los títulos del formulario */
-dialog#modal-nuevo-tipo h2,
-dialog.modal-tipo-vehiculo h2,
-dialog#modal-nuevo-tipo h3 {
+dialog#modal-nuevo-tipo .formulario-card h3 {
     margin-top: 0;
-    margin-bottom: 20px;
-    color: #070b19;
-    font-size: 1.35rem;
+    margin-bottom: 24px;
+    color: #070b19; /* Tu azul oscuro principal */
+    font-size: 1.4rem;
     font-weight: 700;
     text-align: left;
 }
 
-/* Contenedores de los campos (inputs con sus labels) */
-dialog#modal-nuevo-tipo .form-grupo,
-dialog.modal-tipo-vehiculo .grupo-formulario,
-dialog.modal-tipo-vehiculo div:has(input) {
+/* 2. CAMPOS DE ENTRADA (INPUTS Y LABELS) */
+.campos-horizontales {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 20px;
+    gap: 16px;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Estilos de las etiquetas de texto */
-dialog#modal-nuevo-tipo label,
-dialog.modal-tipo-vehiculo label {
+.grupo-input {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.grupo-input label {
     font-size: 13px;
     font-weight: 600;
-    color: #2d3748;
+    color: #475569;
     text-align: left;
 }
 
-/* Cuadrando las cajas de texto (Inputs) */
-dialog#modal-nuevo-tipo input,
-dialog.modal-tipo-vehiculo input {
+.grupo-input input {
     width: 100%;
     padding: 12px;
     border: 1px solid #cbd5e1;
@@ -374,34 +371,29 @@ dialog.modal-tipo-vehiculo input {
     background-color: #f8fafc;
     font-size: 14px;
     box-sizing: border-box;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
     outline: none;
-    color: #334155;
+    color: #0f172a;
 }
 
-dialog#modal-nuevo-tipo input:focus,
-dialog.modal-tipo-vehiculo input:focus {
+.grupo-input input:focus {
     border-color: #070b19;
     background-color: #ffffff;
 }
 
-/* Ajuste para la fila de botones (Cancelar y Guardar) */
-dialog#modal-nuevo-tipo .modal-acciones,
-dialog.modal-tipo-vehiculo .modal-acciones,
-dialog.modal-tipo-vehiculo form > div:last-child {
+/* 3. BOTONES DEL FORMULARIO DEL MODAL (ESTÁTICOS) */
+.botones-formulario {
     display: flex;
     flex-direction: row;
     gap: 12px;
     justify-content: flex-start;
     width: 100%;
-    margin-top: 8px;
+    margin-top: 24px;
     box-sizing: border-box;
 }
 
-/* Botón Cancelar de tipos */
-dialog#modal-nuevo-tipo button[type="button"],
-dialog.modal-tipo-vehiculo button#btn-cancelar,
-dialog.modal-tipo-vehiculo button:first-of-type {
+/* Botón Cancelar */
+.btn-secundario {
     background-color: #e2e8f0;
     color: #475569;
     border: none;
@@ -410,27 +402,81 @@ dialog.modal-tipo-vehiculo button:first-of-type {
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
     flex: 1;
 }
 
-/* Botón Guardar de tipos */
-dialog#modal-nuevo-tipo button[type="submit"],
-dialog.modal-tipo-vehiculo button#btn-guardar,
-dialog.modal-tipo-vehiculo button:last-of-type {
-    background-color: var(--primary, #070b19);
-    color: var(--secondary, #ffffff);
+.btn-secundario:hover {
+    background-color: #cbd5e1;
+}
+
+/* Botón Guardar */
+.btn-guardar {
+    background-color: #070b19;
+    color: #ffffff;
     border: none;
     padding: 12px 24px;
     border-radius: 8px;
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s ease;
     flex: 1;
 }
 
-dialog#modal-nuevo-tipo button:hover,
-dialog.modal-tipo-vehiculo button:hover {
+.btn-guardar:hover {
     opacity: 0.9;
+}
+
+/* 4. BOTONES DE LAS TARJETAS (DINÁMICOS POR JAVASCRIPT) */
+.tarjeta-acciones {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Apunta a las clases reales inyectadas por el archivo diseño.js */
+.btn-editar-tipo, 
+.btn-eliminar-tipo {
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 1;
+    box-sizing: border-box;
+}
+
+/* Estilo para el botón Editar */
+.btn-editar-tipo {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+}
+
+.btn-editar-tipo:hover {
+    background-color: #e2e8f0;
+    border-color: #94a3b8;
+    color: #0f172a;
+}
+
+/* Estilo para el botón Eliminar */
+.btn-eliminar-tipo {
+    background-color: #fee2e2;
+    border: 1px solid #fca5a5;
+    color: #ef4444;
+}
+
+.btn-eliminar-tipo:hover {
+    background-color: #fecaca;
+    border-color: #f87171;
+    color: #dc2626;
 }

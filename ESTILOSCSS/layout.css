@@ -3,6 +3,7 @@ ESTILOS DE ESTRUCTURA Y LAYOUT GLOBAL (INDEX, LOGIN Y SERVICIOS)
    ========================================================================== */
 
 /* --- ESTRUCTURA DE INDEX (Header y Navegación) --- */
+/*====================================================*/
 .barra-superior {
     background-color: var(--primary);
     color: var(--primary-foreground);
@@ -54,6 +55,7 @@ ESTILOS DE ESTRUCTURA Y LAYOUT GLOBAL (INDEX, LOGIN Y SERVICIOS)
 }
 
 /* --- ESTRUCTURA DE LOGIN --- */
+/*===============================*/
 .contenedor1 {
     min-height: 100vh;
     display: flex;
@@ -75,7 +77,7 @@ form {
 }
 
 .seccion-oscura {
-    background-color: var(--primary);
+    background-color: var(--accent-foreground);
     padding: 35px;
     text-align: center;
     color: var(--secondary);
@@ -95,6 +97,7 @@ form {
 }
 
 /* --- ESTRUCTURA DE SERVICIOS Y VISTAS --- */
+/*===========================================*/
 .contenedor-vista {
     display: flex;
     flex-direction: column;
@@ -121,7 +124,7 @@ form {
 .content {
     position: relative;
     min-height: 250px;
-    background: #fff;
+    background: var(--secondary);
 }
 
 .content_text {
