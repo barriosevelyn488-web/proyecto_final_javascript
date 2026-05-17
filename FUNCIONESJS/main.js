@@ -58,9 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- ESCUCHADORES GLOBALES ASÍNCRO-DINÁMICOS PARA EL MODAL DE PERFIL ---
+    // --- ESCUCHADORES GLOBALES DE INTERACCIÓN DINÁMICA PARA EL MODAL DE PERFIL ---
     document.addEventListener('click', async (e) => {
-        // DETECCIÓN POR CLASE .perfil-btn ADAPTADA A TU HTML REAL
+        
+        // 1. Apertura del componente asíncrono de perfil
         if (e.target.closest('.perfil-btn')) {
             try {
                 let modalPerfil = document.getElementById('modal-perfil');
@@ -71,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     const htmlModal = await respuesta.text();
                     document.body.insertAdjacentHTML('beforeend', htmlModal);
+                    modalPerfil = document.getElementById('modal-perfil'); // Re-capturar el nodo inyectado
                 }
 
                 const perfilActual = obtenerPerfil()[0];
@@ -83,19 +85,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('perfil-pass-nueva').value = '';
                 document.getElementById('perfil-pass-confirmar').value = '';
                 
-                alternarFormularioPerfil(true);
+                // Muestra el componente dialog nativo
+                if (modalPerfil && typeof modalPerfil.showModal === 'function') {
+                    modalPerfil.showModal();
+                } else {
+                    alternarFormularioPerfil(true);
+                }
             } catch (error) {
                 console.error("Error al estructurar el componente de perfil:", error);
             }
         }
 
-        if (e.target.id === 'btn-cancelar-perfil' || e.target.classList.contains('cerrar-modal-x')) {
-            alternarFormularioPerfil(false);
+        // 2. Control de Cierre y Limpieza Dinámica (Captura la "X" o el botón "Cancelar")
+        if (e.target.id === 'btn-cancelar-perfil' || e.target.classList.contains('cerrar-modal-x') || e.target.classList.contains('btn-secundario')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const modalPerfil = document.getElementById('modal-perfil');
+            const formularioPerfil = modalPerfil?.querySelector('.modal-formulario') || document.getElementById('formulario-perfil');
+            
+            if (formularioPerfil) {
+                formularioPerfil.reset(); // Limpia los inputs al cancelar
+            }
+
+            if (modalPerfil && typeof modalPerfil.close === 'function') {
+                modalPerfil.close(); // Ejecuta el cierre del componente nativo
+            } else {
+                alternarFormularioPerfil(false);
+            }
         }
     });
 
+    // Control de actualización de datos del perfil
     document.addEventListener('submit', (e) => {
-        if (e.target.id === 'formulario-perfil') {
+        if (e.target.id === 'formulario-perfil' || e.target.classList.contains('modal-formulario')) {
             e.preventDefault();
 
             const nombre = document.getElementById('perfil-nombre').value.trim();
@@ -113,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let nuevaContrasena = '';
 
             if (passActual || passNueva || passConfirmar) {
-                if (passActual !== perfilExistente.contrasena) {
+                if (perfilExistente && passActual !== perfilExistente.contrasena) {
                     alert("🚨 La contraseña actual introducida es incorrecta.");
                     return;
                 }
@@ -130,7 +153,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             guardarPerfil({ nombre, email, nuevaContrasena });
             alert("✅ Perfil actualizado correctamente.");
-            alternarFormularioPerfil(false);
+            
+            const modalPerfil = document.getElementById('modal-perfil');
+            if (modalPerfil && typeof modalPerfil.close === 'function') {
+                modalPerfil.close();
+            } else {
+                alternarFormularioPerfil(false);
+            }
         }
     });
 
@@ -309,29 +338,3 @@ document.addEventListener('DOMContentLoaded', () => {
     if (botonInicial) cargarPagina(botonInicial.getAttribute('data-seccion'), botonInicial);
 });
 
-// ==========================================================================
-// CONTROL DE CIERRE Y LIMPIEZA DE MODAL PERFIL
-// ==========================================================================
-const modalPerfil = document.querySelector('#modal-perfil');
-const formularioPerfil = modalPerfil?.querySelector('.modal-formulario');
-const botonCerrarX = modalPerfil?.querySelector('.cerrar-modal-x');
-const botonCancelar = modalPerfil?.querySelector('.btn-secundario');
-
-function resetearYFuncionCerrar() {
-    if (formularioPerfil) {
-        formularioPerfil.reset(); // Limpia los inputs
-    }
-    modalPerfil.close(); // Cierra el dialog nativo
-}
-
-// Escucha clics en la X
-botonCerrarX?.addEventListener('click', (e) => {
-    e.preventDefault(); // Detiene comportamiento de formulario
-    resetearYFuncionCerrar();
-});
-
-// Escucha clics en Cancelar
-botonCancelar?.addEventListener('click', (e) => {
-    e.preventDefault(); // Detiene comportamiento de formulario
-    resetearYFuncionCerrar();
-});

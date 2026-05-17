@@ -166,28 +166,3 @@ export const alternarFormularioPerfil = (mostrar) => {
         if (formulario) formulario.reset(); 
     }
 };
-
-// ==========================================================================
-// CONTROL DE CIERRE Y LIMPIEZA DE MODAL PERFIL
-// ==========================================================================
-const modalPerfil = document.querySelector('#modal-perfil');
-const formularioPerfil = modalPerfil?.querySelector('.modal-formulario');
-const botonCerrarX = modalPerfil?.querySelector('.cerrar-modal-x');
-const botonCancelar = modalPerfil?.querySelector('.btn-secundario');
-
-function resetearYFuncionCerrar() {
-    if (formularioPerfil) {
-        formularioPerfil.reset(); 
-    }
-    modalPerfil.close(); 
-}
-
-botonCerrarX?.addEventListener('click', (e) => {
-    e.preventDefault();
-    resetearYFuncionCerrar();
-});
-
-botonCancelar?.addEventListener('click', (e) => {
-    e.preventDefault();
-    resetearYFuncionCerrar();
-});
