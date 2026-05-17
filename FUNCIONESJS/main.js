@@ -1,16 +1,24 @@
+// ==========================================================================
+// MAIN.JS - CONTROLADOR GENERAL INTEGRADO (TODOS LOS EVENTOS DE LA APP)
+// ==========================================================================
+import { 
+    obtenerTipos, guardarTipoVehiculo, eliminarTipoVehiculo, 
+    obtenerServicios, guardarService, eliminarServicio, finalizarServicio,
+    obtenerPerfil, guardarPerfil 
+} from './gestion.js';
 
-
-// ==========================================
-// MAIN.JS - CONTROLADOR GENERAL
-// ==========================================
-import { obtenerTipos, guardarTipoVehiculo, eliminarTipoVehiculo } from './gestion.js';
-import { alternarFormularioTipo, renderizarTipos } from './diseño.js';
+import { 
+    alternarFormularioTipo, renderizarTipos, 
+    alternarFormularioIngreso, renderizarServicios,
+    alternarFormularioPerfil 
+} from './diseño.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const appContent = document.getElementById('app-content');
     const menuNavegacion = document.querySelector('.tabs-nav');
+    
+    let subFiltroServicioActual = 'todos';
 
-    // Carga de páginas externas
     const cargarPagina = async (seccion, botonActivo) => {
         try {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -25,10 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const html = await respuesta.text();
             appContent.innerHTML = html;
 
-            // SI ENTRA A TIPOS: Inicializamos el listado guardado
             if (seccion === 'tipos') {
-                const tiposActuales = obtenerTipos();
-                renderizarTipos(tiposActuales);
+                renderizarTipos(obtenerTipos());
+            }
+            
+            if (seccion === 'servicios') {
+                subFiltroServicioActual = 'todos'; 
+                renderizarServicios(obtenerServicios(), subFiltroServicioActual);
             }
 
         } catch (error) {
@@ -37,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Delegación para el menú superior
     if (menuNavegacion) {
         menuNavegacion.addEventListener('click', (e) => {
             const boton = e.target.closest('.tab-btn');
@@ -48,78 +58,280 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ESCUCHA DE ACCIONES DENTRO DE LAS VISTAS (Delegación de eventos global en appContent)
+    // --- ESCUCHADORES GLOBALES ASÍNCRO-DINÁMICOS PARA EL MODAL DE PERFIL ---
+    document.addEventListener('click', async (e) => {
+        // DETECCIÓN POR CLASE .perfil-btn ADAPTADA A TU HTML REAL
+        if (e.target.closest('.perfil-btn')) {
+            try {
+                let modalPerfil = document.getElementById('modal-perfil');
+                
+                if (!modalPerfil) {
+                    const respuesta = await fetch('/PAGINAS/perfil.html');
+                    if (!respuesta.ok) throw new Error("No se pudo obtener el archivo perfil.html");
+                    
+                    const htmlModal = await respuesta.text();
+                    document.body.insertAdjacentHTML('beforeend', htmlModal);
+                }
+
+                const perfilActual = obtenerPerfil()[0];
+                if (perfilActual) {
+                    document.getElementById('perfil-nombre').value = perfilActual.nombre;
+                    document.getElementById('perfil-email').value = perfilActual.email;
+                }
+                
+                document.getElementById('perfil-pass-actual').value = '';
+                document.getElementById('perfil-pass-nueva').value = '';
+                document.getElementById('perfil-pass-confirmar').value = '';
+                
+                alternarFormularioPerfil(true);
+            } catch (error) {
+                console.error("Error al estructurar el componente de perfil:", error);
+            }
+        }
+
+        if (e.target.id === 'btn-cancelar-perfil' || e.target.classList.contains('cerrar-modal-x')) {
+            alternarFormularioPerfil(false);
+        }
+    });
+
+    document.addEventListener('submit', (e) => {
+        if (e.target.id === 'formulario-perfil') {
+            e.preventDefault();
+
+            const nombre = document.getElementById('perfil-nombre').value.trim();
+            const email = document.getElementById('perfil-email').value.trim();
+            const passActual = document.getElementById('perfil-pass-actual').value;
+            const passNueva = document.getElementById('perfil-pass-nueva').value;
+            const passConfirmar = document.getElementById('perfil-pass-confirmar').value;
+
+            if (!nombre || !email) {
+                alert("🚨 El nombre y el email son campos obligatorios.");
+                return;
+            }
+
+            const perfilExistente = obtenerPerfil()[0];
+            let nuevaContrasena = '';
+
+            if (passActual || passNueva || passConfirmar) {
+                if (passActual !== perfilExistente.contrasena) {
+                    alert("🚨 La contraseña actual introducida es incorrecta.");
+                    return;
+                }
+                if (!passNueva || !passConfirmar) {
+                    alert("🚨 Debe completar todos los campos de contraseña para realizar el cambio.");
+                    return;
+                }
+                if (passNueva !== passConfirmar) {
+                    alert("🚨 La nueva contraseña y su confirmación no coinciden.");
+                    return;
+                }
+                nuevaContrasena = passNueva;
+            }
+
+            guardarPerfil({ nombre, email, nuevaContrasena });
+            alert("✅ Perfil actualizado correctamente.");
+            alternarFormularioPerfil(false);
+        }
+    });
+
     if (appContent) {
         appContent.addEventListener('click', (e) => {
-            
-            // A. Botón "+ Nuevo Tipo"
-            if (e.target.closest('.btn-principal')) {
+            if (e.target.classList.contains('filter-item-serv')) {
+                document.querySelectorAll('.filter-item-serv').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+
+                const textoBoton = e.target.textContent.toLowerCase();
+                if (textoBoton.includes('activos')) subFiltroServicioActual = 'activos';
+                else if (textoBoton.includes('finalizados')) subFiltroServicioActual = 'finalizados';
+                else subFiltroServicioActual = 'todos';
+
+                renderizarServicios(obtenerServicios(), subFiltroServicioActual);
+            }
+
+            // --- ACCIONES MÓDULO TIPOS ---
+            if (e.target.closest('#btn-abrir-tipo')) {
+                const inputCodigo = document.getElementById('input-codigo');
+                if (inputCodigo) inputCodigo.disabled = false;
                 alternarFormularioTipo(true);
             }
 
-            // B. Botón "Cancelar" del Formulario de Tipos
             if (e.target.closest('#btn-cancelar-tipo')) {
                 alternarFormularioTipo(false);
-                renderizarTipos(obtenerTipos()); // Regresa a la vista anterior
+                renderizarTipos(obtenerTipos());
             }
 
-            // C. Botón "Eliminar" en la tarjeta
-            const btnEliminar = e.target.closest('.btn-eliminar-tipo');
-            if (btnEliminar) {
-                const codigo = btnEliminar.dataset.codigo;
+            const btnEliminarTipo = e.target.closest('.btn-eliminar-tipo');
+            if (btnEliminarTipo) {
+                const codigo = btnEliminarTipo.dataset.codigo;
                 if (confirm(`¿Estás seguro de eliminar el tipo con código ${codigo}?`)) {
-                    const listaActualizada = eliminarTipoVehiculo(codigo);
-                    renderizarTipos(listaActualizada);
+                    renderizarTipos(eliminarTipoVehiculo(codigo));
                 }
             }
 
-            // D. Botón "Editar" en la tarjeta
-            const btnEditar = e.target.closest('.btn-editar-tipo');
-            if (btnEditar) {
-                const codigo = btnEditar.dataset.codigo;
-                const tipos = obtenerTipos();
-                const tipoAEditar = tipos.find(t => t.codigo === codigo);
-                
+            const btnEditarTipo = e.target.closest('.btn-editar-tipo');
+            if (btnEditarTipo) {
+                const codigo = btnEditarTipo.dataset.codigo;
+                const tipoAEditar = obtenerTipos().find(t => t.codigo === codigo);
                 if (tipoAEditar) {
-                    alternarFormularioTipo(true); // Abrimos formulario
-                    // Rellenamos el formulario con los datos existentes
+                    alternarFormularioTipo(true);
                     document.getElementById('input-codigo').value = tipoAEditar.codigo;
-                    document.getElementById('input-codigo').disabled = true; // El código no se edita, es la llave
+                    document.getElementById('input-codigo').disabled = true;
                     document.getElementById('input-nombre').value = tipoAEditar.nombre;
                     document.getElementById('input-tarifa').value = tipoAEditar.tarifa;
                 }
             }
+            
+            // --- ACCIONES MÓDULO SERVICIOS ---
+            if (e.target.closest('#btn-nuevo-ingreso')) {
+                alternarFormularioIngreso(true);
+                const inputHora = document.getElementById('ingreso-hora-entrada');
+                if (inputHora) {
+                    const ahora = new Date();
+                    inputHora.value = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
+                }
+            }
+
+            if (e.target.id === 'btn-cancelar-ingreso') {
+                e.preventDefault();
+                alternarFormularioIngreso(false);
+            }
+
+            if (e.target.closest('.btn-salida-servicio')) {
+                if (e.target.id === 'btn-guardar-ingreso') {
+                    const ahora = new Date();
+                    const horaSalida = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
+                    if (!confirm(`¿Confirmar SALIDA a las ${horaSalida}?`)) {
+                        e.preventDefault();    
+                        e.stopPropagation();    
+                        return;                
+                    }
+                    return; 
+                }
+
+                const id = e.target.closest('.btn-salida-servicio').dataset.id;
+                const ahora = new Date();
+                const horaSalida = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
+                
+                if (confirm(`¿Confirmar SALIDA a las ${horaSalida}?`)) {
+                    const listaActualizada = finalizarServicio(id, horaSalida);
+                    renderizarServicios(listaActualizada, subFiltroServicioActual);
+                }
+            }
+
+            if (e.target.closest('.btn-eliminar-servicio')) {
+                const id = e.target.closest('.btn-eliminar-servicio').dataset.id;
+                if (confirm('¿Estás seguro de borrar este registro?')) {
+                    const listaActualizada = eliminarServicio(id);
+                    renderizarServicios(listaActualizada, subFiltroServicioActual);
+                }
+            }
+
+            if (e.target.closest('.btn-editar-servicio')) {
+                const id = e.target.closest('.btn-editar-servicio').dataset.id;
+                const servicioAEditar = obtenerServicios().find(s => s.id === id);
+                
+                if (servicioAEditar) {
+                    alternarFormularioIngreso(true);
+                    document.getElementById('ingreso-placa').value = servicioAEditar.placa;
+                    document.getElementById('ingreso-tipo').value = servicioAEditar.tipoCodigo;
+                    document.getElementById('ingreso-slot').value = servicioAEditar.slot;
+                    document.getElementById('ingreso-hora-entrada').value = servicioAEditar.horaEntrada;
+                    document.getElementById('formulario-nuevo-ingreso').setAttribute('data-edit-id', id);
+                }
+            }
         });
 
-        // E. Evento Submit para Guardar el Formulario
         appContent.addEventListener('submit', (e) => {
             if (e.target.id === 'formulario-nuevo-tipo') {
                 e.preventDefault();
-
-                // Captura analítica de inputs
                 const codigo = document.getElementById('input-codigo').value.trim();
                 const nombre = document.getElementById('input-nombre').value.trim();
                 const tarifa = document.getElementById('input-tarifa').value.trim();
 
-                if (!codigo || !nombre || !tarifa) {
-                    alert("Por favor, llena todos los campos obligatorios.");
-                    return;
+                if (!codigo || !nombre || !tarifa) return alert("Llena todos los campos.");
+                renderizarTipos(guardarTipoVehiculo({ codigo, nombre, tarifa }));
+                alternarFormularioTipo(false);
+            }
+
+            if (e.target.id === 'formulario-nuevo-ingreso') {
+                e.preventDefault();
+
+                const placaInput = document.getElementById('ingreso-placa').value.trim().toUpperCase();
+                const tipoCodigo = document.getElementById('ingreso-tipo').value; 
+                const slot = document.getElementById('ingreso-slot').value.trim();
+                const horaEntrada = document.getElementById('ingreso-hora-entrada').value;
+
+                if (!placaInput || !tipoCodigo || !slot || !horaEntrada) return alert("Complete los campos.");
+
+                const regexPlacaGUATE = /^[A-Z]-?[0-9]{3,4}[A-Z]{3}$/;
+                if (!regexPlacaGUATE.test(placaInput)) {
+                    alert("🚨 Formato de placa incorrecto SAT.");
+                    return; 
                 }
 
-                const objetoTipo = { codigo, nombre, tarifa };
-                
-                // Procesamos en CRUD y redibujamos
-                const listaActualizada = guardarTipoVehiculo(objetoTipo);
-                alternarFormularioTipo(false);
-                renderizarTipos(listaActualizada);
+                const letraPrefijo = placaInput.charAt(0); 
+                const selectEl = document.getElementById('ingreso-tipo');
+                const textoVisibleSelect = selectEl.options[selectEl.selectedIndex].text.toLowerCase();
+
+                if (textoVisibleSelect.includes('moto') && letraPrefijo !== 'M') return alert("🚨 Prefijo M requerido."); 
+                if ((textoVisibleSelect.includes('auto') || textoVisibleSelect.includes('carro')) && letraPrefijo !== 'P') return alert("🚨 Prefijo P requerido.");
+                if (textoVisibleSelect.includes('camion') && letraPrefijo !== 'C') return alert("🚨 Prefijo C requerido.");
+
+                const placaNormalizada = placaInput.replace(/-/g, ''); 
+                const editId = e.target.getAttribute('data-edit-id');
+                const serviciosExistentes = obtenerServicios();
+
+                const placaYaActiva = serviciosExistentes.some(srv => srv.placa.replace(/-/g, '') === placaNormalizada && srv.activo === true && srv.id !== editId);
+                if (placaYaActiva) return alert("🚨 Vehículo ya activo.");
+
+                const slotOcupado = serviciosExistentes.some(srv => srv.slot === slot && srv.activo === true && srv.id !== editId);
+                if (slotOcupado) return alert("⚠️ Slot ocupado.");
+
+                const tipoNombre = selectEl.options[selectEl.selectedIndex].text.split(' (')[0];
+                let objetoServicio;
+
+                if (editId) {
+                    objetoServicio = { id: editId, placa: placaInput, tipoCodigo, tipoNombre, slot, horaEntrada };
+                } else {
+                    const ahora = new Date();
+                    const fecha = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`;
+                    objetoServicio = { id: 'SRV-' + Date.now(), placa: placaInput, tipoCodigo, tipoNombre, slot, fecha, horaEntrada, horaSalida: '', activo: true, costoTotal: 0 };
+                }
+
+                const listaActualizada = guardarService(objetoServicio);
+                alternarFormularioIngreso(false);
+                renderizarServicios(listaActualizada, subFiltroServicioActual);
             }
         });
     }
 
-    // Carga inicial por defecto
     const botonInicial = document.querySelector('.tab-btn.active');
-    if (botonInicial) {
-        const seccionInicial = botonInicial.getAttribute('data-seccion');
-        cargarPagina(seccionInicial, botonInicial);
+    if (botonInicial) cargarPagina(botonInicial.getAttribute('data-seccion'), botonInicial);
+});
+
+// ==========================================================================
+// CONTROL DE CIERRE Y LIMPIEZA DE MODAL PERFIL
+// ==========================================================================
+const modalPerfil = document.querySelector('#modal-perfil');
+const formularioPerfil = modalPerfil?.querySelector('.modal-formulario');
+const botonCerrarX = modalPerfil?.querySelector('.cerrar-modal-x');
+const botonCancelar = modalPerfil?.querySelector('.btn-secundario');
+
+function resetearYFuncionCerrar() {
+    if (formularioPerfil) {
+        formularioPerfil.reset(); // Limpia los inputs
     }
+    modalPerfil.close(); // Cierra el dialog nativo
+}
+
+// Escucha clics en la X
+botonCerrarX?.addEventListener('click', (e) => {
+    e.preventDefault(); // Detiene comportamiento de formulario
+    resetearYFuncionCerrar();
+});
+
+// Escucha clics en Cancelar
+botonCancelar?.addEventListener('click', (e) => {
+    e.preventDefault(); // Detiene comportamiento de formulario
+    resetearYFuncionCerrar();
 });
