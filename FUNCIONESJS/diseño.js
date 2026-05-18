@@ -43,7 +43,7 @@ export const renderizarTipos = (tiposList) => {
             <div class="tarjeta-vehiculo" data-codigo="${tipo.codigo}">
                 <div class="tarjeta-header">
                     <div class="icono-carro-tarjeta">
-                        <img src="/IMG/1.carrito.jpg" alt="Carro" style="width: 30px; opacity: 0.7;">
+                        <img src="IMG/1.carrito.jpg" alt="Carro" style="width: 30px; opacity: 0.7;">
                     </div>
                     <div class="tarjeta-info-principal">
                         <h3>${tipo.nombre}</h3>

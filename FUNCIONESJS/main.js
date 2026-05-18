@@ -16,6 +16,7 @@ import {
 document.addEventListener('DOMContentLoaded', () => {
     const appContent = document.getElementById('app-content');
     const menuNavegacion = document.querySelector('.tabs-nav');
+    const recursoBase = window.location.pathname.includes('/DOCSHTML/') ? '../' : '';
     
     let subFiltroServicioActual = 'todos';
 
@@ -27,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const seccionesValidas = ['servicios', 'tipos'];
             if (!seccionesValidas.includes(seccion)) return;
 
-            const respuesta = await fetch(`/PAGINAS/${seccion}.html`);
+            const respuesta = await fetch(`${recursoBase}PAGINAS/${seccion}.html`);
             if (!respuesta.ok) throw new Error("No se pudo encontrar la página");
 
             const html = await respuesta.text();
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const modalExistente = document.getElementById('modal-perfil');
                 if (modalExistente) modalExistente.remove();
 
-                const respuesta = await fetch('/PAGINAS/perfil.html');
+                const respuesta = await fetch(`${recursoBase}PAGINAS/perfil.html`);
                 if (!respuesta.ok) throw new Error("No se pudo obtener el archivo perfil.html");
                 
                 const htmlModal = await respuesta.text();

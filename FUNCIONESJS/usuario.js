@@ -49,7 +49,7 @@ document.addEventListener("click", (e) => {
         // Validación estricta contra los datos en tiempo real del LocalStorage
         if (perfilActivo && emailIngresado === perfilActivo.email && passwordIngresada === perfilActivo.contrasena) {
             $error.style.display = "none";
-            window.location.href = "index.html";
+            window.location.href = "../index.html";
         } else {
             $error.style.display = "block";
             $password.value = ""; 
