@@ -8,21 +8,28 @@ const $submit = document.getElementById("submit"),
       $error = document.getElementById("mensaje-error");
 
 const verificarPerfilInicial = () => {
-    if (!localStorage.getItem('perfil')) {
-        // UNIFICADO: Mismo correo de fábrica que en gestion.js para evitar bloqueos
+    const perfilExistente = localStorage.getItem('perfil');
+    
+    // Si no hay perfil, o si queremos forzar que el administrador por defecto esté presente
+    if (!perfilExistente) {
         const perfilPorDefecto = [{
             nombre: "Administrador",
-            email: "admin@campusparking.com", 
+            email: "admin@campusparking.com",
             contrasena: "Admin123"
         }];
         localStorage.setItem('perfil', JSON.stringify(perfilPorDefecto));
-        console.log("🔑 Credenciales de fábrica inicializadas correctamente.");
+        console.log(" Credenciales de fábrica inicializadas.");
     }
 };
 
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get('logout') === '1') {
     sessionStorage.removeItem('sessionActive');
+}
+// Truco para exposición: si agregas ?clear=1 a la URL, limpia todo.
+if (urlParams.get('clear') === '1') {
+    localStorage.clear();
+    window.location.replace("login.html");
 }
 
 verificarPerfilInicial();
@@ -45,7 +52,7 @@ const procesarLogin = () => {
         basePerfil = [{ nombre: "Administrador", email: "admin@campusparking.com", contrasena: "Admin123" }];
     }
 
-    const perfilActivo = basePerfil[0]; 
+    const perfilActivo = basePerfil.length > 0 ? basePerfil[0] : null; 
 
     if (perfilActivo && emailIngresado === perfilActivo.email && passwordIngresada === perfilActivo.contrasena) {
         $error.style.display = "none";
@@ -54,6 +61,9 @@ const procesarLogin = () => {
     } else {
         $error.style.display = "block";
         $password.value = ""; 
+        // Opcional: animación de sacudida para UX
+        $submit.parentElement.style.animation = "sacudir 0.3s";
+        setTimeout(() => $submit.parentElement.style.animation = "", 300);
     }
 };
 
@@ -64,12 +74,3 @@ if (loginForm) {
         procesarLogin();
     });
 }
-
-document.addEventListener("click", (e) => {
-    if (e.target === $submit) {
-        e.preventDefault(); 
-        procesarLogin();
-    }
-});
-
-
