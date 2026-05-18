@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (e.target.id === 'btn-guardar-ingreso') {
                     const ahora = new Date();
                     const horaSalida = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
-                    if (!confirm(`¿Confirmar SALIDA a las ${horaSalida}?`)) {
+                    if (!confirm(`¿Confirmar Salida a las ${horaSalida}?`)) {
                         e.preventDefault();    
                         e.stopPropagation();    
                         return;                
