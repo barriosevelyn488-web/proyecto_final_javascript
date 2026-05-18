@@ -5,10 +5,10 @@
 Este proyecto fue planificado visualmente en **Figma**, organizado por sprints en **Notion** como cerebro digital, y desarrollado aplicando principios de código limpio y arquitectura modular.
 
 
-![alt text](image-3.png)
+![alt text](/IMG/image-3)
 
-![alt text](image-4.png)
-![alt text](image-5.png)
+![alt text](/IMG/image-4)
+![alt text](/IMG/image-5.png)
 ---
 
 ## 💻 Información de la Autora y Propósito
