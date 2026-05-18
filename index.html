@@ -19,7 +19,7 @@
 
         <div class="acciones-header">
             <button class="perfil-btn">Perfil</button>
-            <a href="DOCSHTML/login.html"><button class="exit-btn">Salir</button></a>
+            <a href="DOCSHTML/login.html?logout=1"><button class="exit-btn">Salir</button></a>
         </div>
     </header>
 
@@ -31,6 +31,11 @@
     <main id="app-content">
     </main>
 
+    <script>
+        if (sessionStorage.getItem('sessionActive') !== 'true') {
+            window.location.replace('DOCSHTML/login.html');
+        }
+    </script>
     <script src="FUNCIONESJS/main.js" type="module"></script>
 </body>
 </html>

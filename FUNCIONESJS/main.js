@@ -69,13 +69,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const modalExistente = document.getElementById('modal-perfil');
                 if (modalExistente) modalExistente.remove();
 
-                const respuesta = await fetch(`${recursoBase}PAGINAS/perfil.html`);
+                const respuesta = await fetch(`${recursoBase}PAGINAS/perfil.html?ts=${Date.now()}`);
                 if (!respuesta.ok) throw new Error("No se pudo obtener el archivo perfil.html");
                 
                 const htmlModal = await respuesta.text();
                 document.body.insertAdjacentHTML('beforeend', htmlModal);
                 
                 const modalPerfil = document.getElementById('modal-perfil');
+
+                // Si el HTML cargado no trae los botones, los inyectamos manualmente.
+                const accionesPerfil = modalPerfil?.querySelector('.modal-acciones-pie');
+                if (accionesPerfil && accionesPerfil.children.length === 0) {
+                    accionesPerfil.innerHTML = `
+                        <button type="button" id="btn-cancelar-perfil" class="btn-secundario">Cancelar</button>
+                        <button type="submit" class="btn-primario">Guardar Cambios</button>
+                    `;
+                }
 
                 // Inyección segura de datos desde LocalStorage
                 const perfilActual = obtenerPerfil()[0];
@@ -92,6 +101,63 @@ document.addEventListener('DOMContentLoaded', () => {
                     modalPerfil.showModal(); 
                 } else {
                     alternarFormularioPerfil(true);
+                }
+                // Aseguramos manejadores directos para evitar problemas de delegación
+                try {
+                    const btnCancelar = document.getElementById('btn-cancelar-perfil');
+                    if (btnCancelar) {
+                        btnCancelar.addEventListener('click', (ev) => {
+                            ev.preventDefault();
+                            const m = document.getElementById('modal-perfil');
+                            const f = document.getElementById('formulario-perfil');
+                            if (f) f.reset();
+                            if (m) {
+                                if (typeof m.close === 'function') m.close();
+                                m.remove();
+                            }
+                        });
+                    }
+
+                    const formularioPerfil = document.getElementById('formulario-perfil');
+                    if (formularioPerfil) {
+                        formularioPerfil.addEventListener('submit', (ev) => {
+                            ev.preventDefault();
+                            const nombre = document.getElementById('perfil-nombre').value.trim();
+                            const email = document.getElementById('perfil-email').value.trim();
+                            const passActual = document.getElementById('perfil-pass-actual').value;
+                            const passNueva = document.getElementById('perfil-pass-nueva').value;
+                            const passConfirmar = document.getElementById('perfil-pass-confirmar').value;
+
+                            if (!nombre || !email) return alert("🚨 El nombre y el email son obligatorios.");
+
+                            const perfilExistente = obtenerPerfil()[0];
+                            let nuevaContrasena = perfilExistente ? perfilExistente.contrasena : '';
+
+                            if (passActual || passNueva || passConfirmar) {
+                                if (perfilExistente && passActual !== perfilExistente.contrasena) {
+                                    return alert("🚨 La contraseña actual introducida es incorrecta.");
+                                }
+                                if (!passNueva || !passConfirmar) {
+                                    return alert("🚨 Debe completar todos los campos de contraseña.");
+                                }
+                                if (passNueva !== passConfirmar) {
+                                    return alert("🚨 Las nuevas contraseñas no coinciden.");
+                                }
+                                nuevaContrasena = passNueva;
+                            }
+
+                            guardarPerfil({ nombre, email, contrasena: nuevaContrasena });
+                            alert("✅ Perfil actualizado correctamente.");
+
+                            const m = document.getElementById('modal-perfil');
+                            if (m) {
+                                if (typeof m.close === 'function') m.close();
+                                m.remove();
+                            }
+                        });
+                    }
+                } catch (err) {
+                    console.error('Error binding perfil handlers:', err);
                 }
             } catch (error) {
                 console.error("Error al montar la interfaz de perfil:", error);

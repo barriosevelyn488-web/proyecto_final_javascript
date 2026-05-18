@@ -91,7 +91,7 @@ export const obtenerPerfil = () => {
     if (!datos) {
         return [{
             nombre: "Administrador",
-            email: "admin@campus12.com",
+            email: "admin@campusparking.com",
             contrasena: "Admin123" 
         }];
     }
@@ -101,7 +101,7 @@ export const obtenerPerfil = () => {
         // En caso de que el JSON viejo esté corrupto, devolvemos el estado por defecto seguro
         return [{
             nombre: "Administrador",
-            email: "admin@campus12.com",
+            email: "admin@campusparking.com",
             contrasena: "Admin123"
         }];
     }

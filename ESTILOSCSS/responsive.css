@@ -4,10 +4,11 @@
     .barra-superior {
         flex-direction: column;
         height: auto;
-        padding: var(--spacing-4);
+        padding: var(--spacing-4) 0;
         gap: var(--spacing-4);
         align-items: center;
-        height: 500px;
+        flex-wrap: nowrap;
+        justify-content: center;
     }
 
     .container-logo {
