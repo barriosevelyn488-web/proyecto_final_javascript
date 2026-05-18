@@ -26,6 +26,11 @@ export const guardarTipoVehiculo = (nuevoTipo) => {
 };
 
 export const eliminarTipoVehiculo = (codigo) => {
+    const serviciosActivos = obtenerServicios().some(s => s.tipoCodigo.toUpperCase() === codigo.toUpperCase() && s.activo);
+    if (serviciosActivos) {
+        alert("No se puede eliminar: Hay vehículos en el parqueadero usando este tipo.");
+        return obtenerTipos();
+    }
     let tipos = obtenerTipos();
     tipos = tipos.filter(t => t.codigo.toUpperCase() !== codigo.toUpperCase());
     localStorage.setItem('tiposVehiculos', JSON.stringify(tipos));

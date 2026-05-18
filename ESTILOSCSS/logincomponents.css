@@ -7,6 +7,7 @@ MODULO 1: COMPONENTES DE LA PANTALLA DE LOGIN
     backdrop-filter: blur;
     border-radius: var(--radius-md);
     opacity: 0.9;
+    mix-blend-mode: screen; /* Elimina el fondo negro de la imagen */
 }
 
 .seccion-blanca {

@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Parking</title>
     <link rel="stylesheet" href="ESTILOSCSS/main.css">
+    <!-- API de Iconify para carga dinámica de iconos -->
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <script>
+        // Validación inmediata para evitar parpadeo de contenido protegido
+        if (sessionStorage.getItem('sessionActive') !== 'true') {
+            window.location.replace('DOCSHTML/login.html');
+        }
+    </script>
 </head>
 <body>
 
@@ -19,7 +27,7 @@
 
         <div class="acciones-header">
             <button class="perfil-btn">Perfil</button>
-            <a href="DOCSHTML/login.html?logout=1"><button class="exit-btn">Salir</button></a>
+            <a href="DOCSHTML/login.html?logout=1" class="exit-btn">Salir</a>
         </div>
     </header>
 
@@ -31,11 +39,6 @@
     <main id="app-content">
     </main>
 
-    <script>
-        if (sessionStorage.getItem('sessionActive') !== 'true') {
-            window.location.replace('DOCSHTML/login.html');
-        }
-    </script>
     <script src="FUNCIONESJS/main.js" type="module"></script>
 </body>
 </html>

@@ -40,26 +40,14 @@ export const renderizarTipos = (tiposList) => {
     if (contenedorTarjetas) {
         contenedorTarjetas.style.display = 'grid';
         contenedorTarjetas.innerHTML = tiposList.map(tipo => `
-            <div class="tarjeta-vehiculo" data-codigo="${tipo.codigo}">
-                <div class="tarjeta-header">
-                    <div class="icono-carro-tarjeta">
-                        <img src="IMG/1.carrito.jpg" alt="Carro" style="width: 30px; opacity: 0.7;">
-                    </div>
-                    <div class="tarjeta-info-principal">
-                        <h3>${tipo.nombre}</h3>
-                        <span class="codigo-tag">Código: ${tipo.codigo.toUpperCase()}</span>
-                    </div>
-                </div>
-                <hr class="divisor-tarjeta">
-                <div class="tarjeta-body">
-                    <p class="label-tarifa">Tarifa por hora</p>
-                    <p class="precio-tarjeta">Q${tipo.tarifa}</p>
-                </div>
-                <div class="tarjeta-acciones">
-                    <button class="btn-editar-tipo" data-codigo="${tipo.codigo}"><i class="fas fa-edit"></i> Editar</button>
-                    <button class="btn-eliminar-tipo" data-codigo="${tipo.codigo}"><i class="fas fa-trash"></i> Eliminar</button>
-                </div>
-            </div>
+            <parking-card 
+                tipo="tipo-vehiculo" 
+                titulo="${tipo.nombre}" 
+                categoria="${tipo.nombre}"
+                subtitulo="Código: ${tipo.codigo.toUpperCase()}" 
+                costo="${tipo.tarifa}" 
+                data-id="${tipo.codigo}">
+            </parking-card>
         `).join('');
     }
 };
@@ -124,33 +112,17 @@ export const renderizarServicios = (listaServicios, filtroActivo = 'todos') => {
     contenedorArea.appendChild(gridEstacionados);
 
     gridEstacionados.innerHTML = listaFiltrada.map(servicio => `
-        <div class="tarjeta-vehiculo" data-id="${servicio.id}" style="display: flex; flex-direction: column; justify-content: space-between;">
-            <div class="tarjeta-header">
-                <div class="icono-carro-tarjeta"><span style="font-size: 24px;">🚗</span></div>
-                <div class="tarjeta-info-principal">
-                    <h3>${servicio.placa.toUpperCase()}</h3>
-                    <span class="codigo-tag">${servicio.tipoNombre} • Slot #${servicio.slot}</span>
-                </div>
-            </div>
-            <hr class="divisor-tarjeta">
-            <div class="tarjeta-body" style="padding: 4px 0;">
-                <p class="label-tarifa" style="font-size: 13px;">Fecha: <strong>${servicio.fecha}</strong></p>
-                <p class="label-tarifa" style="font-size: 13px; margin-top: 4px;">Entrada: <span style="color:#0f172a; font-weight:600;">${servicio.horaEntrada}</span></p>
-                <p class="label-tarifa" style="font-size: 13px;">Salida: <span style="color:#64748b;">${servicio.horaSalida || 'En curso...'}</span></p>
-            </div>
-            <div class="tarjeta-acciones" style="margin-top: 12px; gap: 8px;">
-                ${servicio.activo ? `
-                    <button class="btn-salida-servicio" data-id="${servicio.id}" style="background-color: #0f172a; color: #fff; flex: 1; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">🚪 Salida</button>
-                    <button class="btn-editar-servicio" data-id="${servicio.id}" style="background-color: #f1f5f9; color: #334155; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">✏️ Editar</button>
-                ` : `
-                    <div style="flex: 1; text-align: left;">
-                        <span style="font-size: 11px; color: #64748b; display:block;">Cobro Total</span>
-                        <strong style="font-size: 18px; color: #16a34a;">Q${servicio.costoTotal}</strong>
-                    </div>
-                `}
-                <button class="btn-eliminar-servicio" data-id="${servicio.id}" style="background-color: #fee2e2; color: #ef4444; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer;">🗑️ Borrar</button>
-            </div>
-        </div>
+        <parking-card 
+            tipo="servicio" 
+            titulo="${servicio.placa.toUpperCase()}" 
+            subtitulo="${servicio.tipoNombre} • Slot #${servicio.slot}" 
+            categoria="${servicio.tipoNombre}"
+            detalle1="${servicio.horaEntrada}" 
+            detalle2="${servicio.horaSalida}" 
+            costo="${servicio.costoTotal}" 
+            activo="${servicio.activo}" 
+            data-id="${servicio.id}">
+        </parking-card>
     `).join('');
 };
 

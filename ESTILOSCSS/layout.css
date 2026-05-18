@@ -5,7 +5,7 @@ ESTILOS DE ESTRUCTURA Y LAYOUT GLOBAL (INDEX, LOGIN Y SERVICIOS)
 /* --- ESTRUCTURA DE INDEX (Header y Navegación) --- */
 /*====================================================*/
 .barra-superior {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     color: var(--primary-foreground);
     display: flex;
     justify-content: space-between;
@@ -30,6 +30,7 @@ ESTILOS DE ESTRUCTURA Y LAYOUT GLOBAL (INDEX, LOGIN Y SERVICIOS)
     height: 60px;
     width: auto;
     border-radius: var(--radius-sm);
+    mix-blend-mode: screen; /* Hace que el fondo negro de la imagen se vuelva transparente */
 }
 
 .textos-logo { display: flex; flex-direction: column; }

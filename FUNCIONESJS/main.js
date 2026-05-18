@@ -12,12 +12,17 @@ import {
     alternarFormularioIngreso, renderizarServicios,
     alternarFormularioPerfil 
 } from './diseño.js';
+import './componentes.js'; // Importamos los Web Components
+import { verificarEstadoAPI } from './peticiones.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const appContent = document.getElementById('app-content');
     const menuNavegacion = document.querySelector('.tabs-nav');
     const recursoBase = window.location.pathname.includes('/DOCSHTML/') ? '../' : '';
     
+    // Llamada al API para verificar conexión en el arranque
+    verificarEstadoAPI();
+
     let subFiltroServicioActual = 'todos';
 
     const cargarPagina = async (seccion, botonActivo) => {
@@ -28,7 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const seccionesValidas = ['servicios', 'tipos'];
             if (!seccionesValidas.includes(seccion)) return;
 
-            const respuesta = await fetch(`${recursoBase}PAGINAS/${seccion}.html`);
+            // Aseguramos que la ruta siempre sea relativa a la raíz o corregida
+            const respuesta = await fetch(`${recursoBase}PAGINAS/${seccion}.html?v=${Date.now()}`);
             if (!respuesta.ok) throw new Error("No se pudo encontrar la página");
 
             const html = await respuesta.text();
@@ -77,15 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const modalPerfil = document.getElementById('modal-perfil');
 
-                // Si el HTML cargado no trae los botones, los inyectamos manualmente.
-                const accionesPerfil = modalPerfil?.querySelector('.modal-acciones-pie');
-                if (accionesPerfil && accionesPerfil.children.length === 0) {
-                    accionesPerfil.innerHTML = `
-                        <button type="button" id="btn-cancelar-perfil" class="btn-secundario">Cancelar</button>
-                        <button type="submit" class="btn-primario">Guardar Cambios</button>
-                    `;
-                }
-
                 // Inyección segura de datos desde LocalStorage
                 const perfilActual = obtenerPerfil()[0];
                 if (perfilActual) {
@@ -102,71 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     alternarFormularioPerfil(true);
                 }
-                // Aseguramos manejadores directos para evitar problemas de delegación
-                try {
-                    const btnCancelar = document.getElementById('btn-cancelar-perfil');
-                    if (btnCancelar) {
-                        btnCancelar.addEventListener('click', (ev) => {
-                            ev.preventDefault();
-                            const m = document.getElementById('modal-perfil');
-                            const f = document.getElementById('formulario-perfil');
-                            if (f) f.reset();
-                            if (m) {
-                                if (typeof m.close === 'function') m.close();
-                                m.remove();
-                            }
-                        });
-                    }
-
-                    const formularioPerfil = document.getElementById('formulario-perfil');
-                    if (formularioPerfil) {
-                        formularioPerfil.addEventListener('submit', (ev) => {
-                            ev.preventDefault();
-                            const nombre = document.getElementById('perfil-nombre').value.trim();
-                            const email = document.getElementById('perfil-email').value.trim();
-                            const passActual = document.getElementById('perfil-pass-actual').value;
-                            const passNueva = document.getElementById('perfil-pass-nueva').value;
-                            const passConfirmar = document.getElementById('perfil-pass-confirmar').value;
-
-                            if (!nombre || !email) return alert("🚨 El nombre y el email son obligatorios.");
-
-                            const perfilExistente = obtenerPerfil()[0];
-                            let nuevaContrasena = perfilExistente ? perfilExistente.contrasena : '';
-
-                            if (passActual || passNueva || passConfirmar) {
-                                if (perfilExistente && passActual !== perfilExistente.contrasena) {
-                                    return alert("🚨 La contraseña actual introducida es incorrecta.");
-                                }
-                                if (!passNueva || !passConfirmar) {
-                                    return alert("🚨 Debe completar todos los campos de contraseña.");
-                                }
-                                if (passNueva !== passConfirmar) {
-                                    return alert("🚨 Las nuevas contraseñas no coinciden.");
-                                }
-                                nuevaContrasena = passNueva;
-                            }
-
-                            guardarPerfil({ nombre, email, contrasena: nuevaContrasena });
-                            alert("✅ Perfil actualizado correctamente.");
-
-                            const m = document.getElementById('modal-perfil');
-                            if (m) {
-                                if (typeof m.close === 'function') m.close();
-                                m.remove();
-                            }
-                        });
-                    }
-                } catch (err) {
-                    console.error('Error binding perfil handlers:', err);
-                }
             } catch (error) {
                 console.error("Error al montar la interfaz de perfil:", error);
             }
         }
 
         // 2. Cierre Quirúrgico (X, Cancelar o click en el fondo exterior)
-        const esBotonCerrarX = e.target.classList.contains('cerrar-modal-x');
-        const esBotonCancelar = e.target.id === 'btn-cancelar-perfil';
+        const esBotonCerrarX = e.target.closest('.cerrar-modal-x');
+        const esBotonCancelar = e.target.closest('#btn-cancelar-perfil');
         const esFondoGrisBackdrop = e.target.id === 'modal-perfil';
 
         if (esBotonCerrarX || esBotonCancelar || esFondoGrisBackdrop) {
@@ -191,6 +131,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 modalPerfil.remove(); // Remueve copias para mantener limpio el árbol HTML
             }
+        }
+
+        // 3. Manejo Global de Cancelación para otros Modales (Servicios y Tipos)
+        // Esto asegura que funcionen incluso si el diálogo está en el "top layer"
+        const esCancelarIngreso = e.target.closest('#btn-cancelar-ingreso');
+        const esCancelarTipo = e.target.closest('#btn-cancelar-tipo');
+
+        if (esCancelarIngreso) {
+            alternarFormularioIngreso(false);
+        } else if (esCancelarTipo) {
+            alternarFormularioTipo(false);
         }
     });
 
@@ -262,27 +213,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // --- ACCIONES MÓDULO TIPOS ---
-            if (e.target.closest('#btn-abrir-tipo')) {
+            else if (e.target.closest('#btn-abrir-tipo')) {
                 const inputCodigo = document.getElementById('input-codigo');
                 if (inputCodigo) inputCodigo.disabled = false;
                 alternarFormularioTipo(true);
             }
-
-            if (e.target.closest('#btn-cancelar-tipo')) {
-                alternarFormularioTipo(false);
-                renderizarTipos(obtenerTipos());
-            }
-
-            const btnEliminarTipo = e.target.closest('.btn-eliminar-tipo');
-            if (btnEliminarTipo) {
+            else if (e.target.closest('.btn-eliminar-tipo')) {
+                const btnEliminarTipo = e.target.closest('.btn-eliminar-tipo');
                 const codigo = btnEliminarTipo.dataset.codigo;
                 if (confirm(`¿Estás seguro de eliminar el tipo con código ${codigo}?`)) {
                     renderizarTipos(eliminarTipoVehiculo(codigo));
                 }
             }
 
-            const btnEditarTipo = e.target.closest('.btn-editar-tipo');
-            if (btnEditarTipo) {
+            else if (e.target.closest('.btn-editar-tipo')) {
+                const btnEditarTipo = e.target.closest('.btn-editar-tipo');
                 const codigo = btnEditarTipo.dataset.codigo;
                 const tipoAEditar = obtenerTipos().find(t => t.codigo === codigo);
                 if (tipoAEditar) {
@@ -295,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             // --- ACCIONES MÓDULO SERVICIOS ---
-            if (e.target.closest('#btn-nuevo-ingreso')) {
+            else if (e.target.closest('#btn-nuevo-ingreso')) {
                 alternarFormularioIngreso(true);
                 const inputHora = document.getElementById('ingreso-hora-entrada');
                 if (inputHora) {
@@ -304,24 +249,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            if (e.target.id === 'btn-cancelar-ingreso') {
-                e.preventDefault();
-                alternarFormularioIngreso(false);
+            // Confirmación específica para el botón de "Guardar Ingreso" en el modal
+            else if (e.target.closest('#btn-guardar-ingreso')) {
+                const ahora = new Date();
+                const horaEntrada = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
+                if (!confirm(`¿Confirmar INGRESO a las ${horaEntrada}?`)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
             }
 
-            if (e.target.closest('.btn-salida-servicio')) {
-                if (e.target.id === 'btn-guardar-ingreso') {
-                    const ahora = new Date();
-                    const horaSalida = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
-                    if (!confirm(`¿Confirmar Salida a las ${horaSalida}?`)) {
-                        e.preventDefault();    
-                        e.stopPropagation();    
-                        return;                
-                    }
-                    return; 
-                }
-
-                const id = e.target.closest('.btn-salida-servicio').dataset.id;
+            // Lógica para el botón de "Salida" en las tarjetas de servicio
+            else if (e.target.closest('.btn-salida-servicio')) {
+                const boton = e.target.closest('.btn-salida-servicio');
+                const id = boton.dataset.id;
                 const ahora = new Date();
                 const horaSalida = `${String(ahora.getHours()).padStart(2, '0')}:${String(ahora.getMinutes()).padStart(2, '0')}`;
                 
@@ -331,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            if (e.target.closest('.btn-eliminar-servicio')) {
+            else if (e.target.closest('.btn-eliminar-servicio')) {
                 const id = e.target.closest('.btn-eliminar-servicio').dataset.id;
                 if (confirm('¿Estás seguro de borrar este registro?')) {
                     const listaActualizada = eliminarServicio(id);
@@ -339,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            if (e.target.closest('.btn-editar-servicio')) {
+            else if (e.target.closest('.btn-editar-servicio')) {
                 const id = e.target.closest('.btn-editar-servicio').dataset.id;
                 const servicioAEditar = obtenerServicios().find(s => s.id === id);
                 

@@ -12,13 +12,16 @@
 export const calcularCobroParqueo = (horaEntrada, horaSalida, tarifaPorHora) => {
     const [hEntrada, mEntrada] = horaEntrada.split(':').map(Number);
     const [hSalida, mSalida] = horaSalida.split(':').map(Number);
-
+    
     // Convertir todo a minutos transcurridos en el día para calcular la diferencia exacta
-    const totalMinutos = (hSalida * 60 + mSalida) - (hEntrada * 60 + mEntrada);
+    let totalMinutos = (hSalida * 60 + mSalida) - (hEntrada * 60 + mEntrada);
+
+    // Si el resultado es negativo, asumimos que la salida fue el día siguiente
+    if (totalMinutos < 0) totalMinutos += 24 * 60;
     
     // Convertir a horas cobrables (redondeando hacia arriba, mínimo se cobra 1 hora)
     const horasACobrar = Math.max(1, Math.ceil(totalMinutos / 60));
-
+    
     // Retornar el costo total de la operación
     return horasACobrar * (tarifaPorHora || 0);
 };

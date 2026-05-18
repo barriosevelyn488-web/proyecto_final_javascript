@@ -4,13 +4,18 @@ MODULO 2: ESTRUCTURA DEL DASHBOARD, TARJETAS Y CONTENEDORES
 
 /* --- Botones de la barra superior (Header) --- */
 .perfil-btn, .exit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    gap: var(--spacing-2);
     padding: var(--spacing-2) var(--spacing-4);
     border-radius: var(--radius-md);
     font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: var(--transition-fast);
     height: 45px;
-    width: 100px;
+    
 }
 
 .perfil-btn {
@@ -22,7 +27,6 @@ MODULO 2: ESTRUCTURA DEL DASHBOARD, TARJETAS Y CONTENEDORES
 .exit-btn {
     background-color: var(--destructive);
     color: var(--destructive-foreground);
-    border: none;
 }
 
 .exit-btn:hover {
@@ -76,7 +80,7 @@ MODULO 2: ESTRUCTURA DEL DASHBOARD, TARJETAS Y CONTENEDORES
 
 /* --- Botón e Indicadores de Filtros en pagina de Servicios --- */
 .btn-nuevo-ingreso-serv {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     color: var(--secondary);
     border: none;
     padding: 12px 24px;
@@ -203,9 +207,9 @@ MODULO 2: ESTRUCTURA DEL DASHBOARD, TARJETAS Y CONTENEDORES
 }
 
 .btn-principal {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Gradiente morado */
     color: white;
-    padding: 14px 28px;
+    padding: 12px 24px;
     border-radius: var(--radius-md);
     border: none;
     font-weight: var(--font-weight-bold);
@@ -218,6 +222,6 @@ MODULO 2: ESTRUCTURA DEL DASHBOARD, TARJETAS Y CONTENEDORES
 }
 
 .btn-principal:hover {
-    background-color: #302b63;
+    opacity: 0.9;
     transform: translateY(-2px);
 }
